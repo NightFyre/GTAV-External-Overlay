@@ -45,9 +45,269 @@ namespace Simple_GTAV_External_Trainer.Helpers
         public const string pRange = "1500";
         public const string pRecoil = "0";      //NEW
     }
-
-    /// <summary>
+    
+     /// <summary>
     /// WEAPON DATA
+    /// </summary>
+    /// 
+    #region HANDS
+    class HandsData
+    {
+        public const string Damage = "0";
+        public const string Spread = "2";
+        public const string Penetration = "0";
+        public const string Velocity = "2000";
+        public const string Range = "30";
+    }
+
+    #endregion
+
+    #region PISTOLS
+
+    class PistolData
+    {
+        public const string Damage = "26";
+        public const string Spread = "2";
+        public const string Penetration = "0.009999999776";
+        public const string Velocity = "2000";
+        public const string Range = "120";
+        public const string Recoil = "1";
+    }
+
+    class CombatPistolData
+    {
+        public const string Damage = "27";
+        public const string Spread = "2";
+        public const string Penetration = "0.009999999776";
+        public const string Velocity = "2000";
+        public const string Range = "120";
+    }
+
+    class HeavyRevolverData
+    {
+        public const string Damage = "200";
+        public const string Spread = "2";
+        public const string Penetration = "0.009999999776";
+        public const string Velocity = "2000";
+        public const string Range = "120";
+    }
+
+    class ApPistolData
+    {
+        public const string Damage = "25";
+        public const string Spread = "2";
+        public const string Penetration = "0.009999999776";
+        public const string Velocity = "2000";
+        public const string Range = "120";
+    }
+
+    class FlaraGunData
+    {
+        public const string Damage = "10";
+        public const string Spread = "2";
+        public const string Penetration = "0.009999999776";
+        public const string Velocity = "2000";
+        public const string Range = "120";
+    }
+
+    class AtomizerData
+    {
+        public const string Damage = "10";
+        public const string Spread = "2";
+        public const string Penetration = "0.009999999776";
+        public const string Velocity = "2000";
+        public const string Range = "120";
+    }
+
+    #endregion
+
+    #region SMG's
+
+    class MicroSMGData
+    {
+        public const string Damage = "21";
+        public const string Spread = "2";
+        public const string Penetration = "0.009999999776";
+        public const string Velocity = "2000";
+        public const string Range = "120";
+    }
+
+    class SMGData
+    {
+        public const string Damage = "22";
+        public const string Spread = "2";
+        public const string Penetration = "0.009999999776";
+        public const string Velocity = "2000";
+        public const string Range = "120";
+    }
+
+    #endregion
+
+    #region Assault Rifles
+
+    class AssaultRifleData
+    {
+        public const string Damage = "30";
+        public const string Spread = "2";
+        public const string Penetration = "0.1000000015";
+        public const string Velocity = "2000";
+        public const string Range = "120";
+    }
+
+    class SpecialCarbineData
+    {
+        public const string Damage = "32";
+        public const string Spread = "2";
+        public const string Penetration = "0.1000000015";
+        public const string Velocity = "2000";
+        public const string Range = "120";
+    }
+
+    class BullpupRifleData
+    {
+        public const string Damage = "32";
+        public const string Spread = "2";
+        public const string Penetration = "0.1000000015";
+        public const string Velocity = "2000";
+        public const string Range = "120";
+    }
+
+    class MilitaryRifleData
+    {
+        public const string Damage = "37.5";
+        public const string Spread = "2";
+        public const string Penetration = "0.1000000015";
+        public const string Velocity = "2000";
+        public const string Range = "120";
+    }
+
+    #endregion
+
+    #region SNIPER RIFLES
+
+    class SniperRifleData
+    {
+        public const string Damage = "101";
+        public const string Spread = "2";
+        public const string Penetration = "1";
+        public const string Velocity = "5000";
+        public const string Range = "1500";
+    }
+
+    class MarksmanRifleData
+    {
+        public const string Damage = "65";
+        public const string Spread = "2";
+        public const string Penetration = "1";
+        public const string Velocity = "5000";
+        public const string Range = "1000";
+    }
+
+    class HeavySniperData
+    {
+        public const string Damage = "230";
+        public const string Spread = "2";
+        public const string Penetration = "1";
+        public const string Velocity = "5000";
+        public const string Range = "1500";
+    }
+
+    #endregion
+
+    #region SHOTGUNS
+
+    class PumpShotgunData
+    {
+        public const string Damage = "29";
+        public const string Spread = "2";
+        public const string Penetration = "0.009999999776";
+        public const string Velocity = "2000";
+        public const string Range = "40";
+    }
+
+    class HeavyShotgunData
+    {
+        public const string Damage = "117";
+        public const string Spread = "2";
+        public const string Penetration = "0.009999999776";
+        public const string Velocity = "2000";
+        public const string Range = "50";
+    }
+
+    #endregion
+
+    #region Explosives 
+
+    class GrenadeData
+    {
+        public const string Damage = "117";
+        public const string Spread = "2";
+        public const string Penetration = "0.009999999776";
+        public const string Velocity = "2000";
+        public const string Range = "50";
+    }
+
+    class StickyBombData
+    {
+        public const string Damage = "117";
+        public const string Spread = "2";
+        public const string Penetration = "0.009999999776";
+        public const string Velocity = "2000";
+        public const string Range = "50";
+    }
+
+    class RPGData
+    {
+        public const string Damage = "117";
+        public const string Spread = "2";
+        public const string Penetration = "0.009999999776";
+        public const string Velocity = "2000";
+        public const string Range = "50";
+    }
+
+    class GrenadeLauncherData
+    {
+        public const string Damage = "0";
+        public const string Spread = "2";
+        public const string Penetration = "0";
+        public const string Velocity = "2000";
+        public const string Range = "150";
+    }
+
+    class HomingLauncherData
+    {
+        public const string Damage = "0";
+        public const string Spread = "2";
+        public const string Penetration = "0";
+        public const string Velocity = "2000";
+        public const string Range = "300";
+    }
+
+    #endregion
+
+
+    class KarbineData
+    {
+        public const string Damage = "33";
+        public const string Spread = "2";
+        public const string Penetration = "0.009999999776";
+        public const string Velocity = "2000";
+        public const string Range = "120";
+    }
+
+
+    class MiniGunData
+    {
+        public const string Damage = "30";
+        public const string Spread = "2";
+        public const string Penetration = "0.009999999776";
+        public const string Velocity = "2000";
+        public const string Range = "120";
+    }
+    
+    
+    /// <summary>
+    /// WEAPON DATA EDIT "RasqueP"
     /// </summary>
     #region WEAPON
 
