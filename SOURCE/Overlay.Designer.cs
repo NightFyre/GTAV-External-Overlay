@@ -30,6 +30,7 @@ namespace Simple_GTAV_External_Trainer
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Overlay));
             this.ProcessTimer = new System.Windows.Forms.Timer(this.components);
             this.MemoryTimer = new System.Windows.Forms.Timer(this.components);
             this.WindowHookTimer = new System.Windows.Forms.Timer(this.components);
@@ -56,6 +57,7 @@ namespace Simple_GTAV_External_Trainer
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(120, 0);
             this.ControlBox = false;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Overlay";

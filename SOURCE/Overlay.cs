@@ -46,6 +46,7 @@ namespace Simple_GTAV_External_Trainer
         private bool bGodMode = false;
         private bool bNeverWanted = false;
         private bool bAllOff = false;
+        private bool bControllerMode = false;
 
         [DllImport("user32.dll")]
         static extern short GetAsyncKeyState(System.Windows.Forms.Keys vKey);
@@ -71,7 +72,7 @@ namespace Simple_GTAV_External_Trainer
 
             while (true)
             {
-                if (GetAsyncKeyState(Keys.RButton) < 0)
+                if ((GetAsyncKeyState(Keys.RButton) < 0) && (!bControllerMode))
                 {
                     flag = m.ReadInt("GTA5.exe+1FB2380");
                     var ISZOOMED = m.ReadInt("GTA5.exe+1FB23A4");
@@ -83,8 +84,43 @@ namespace Simple_GTAV_External_Trainer
                             shoot(7);
                             shoot(1);
                         }
+                        //Patch for First Person
+                        if (ENTITY == 1)
+                        {
+                            shoot(7);
+                            shoot(1);
+                        }
                     }
-                    //Quick Patch for Scoped Weapons
+                    //Patch for Scoped Weapons
+                    else if (ENTITY == 1 && bAutoShoot)
+                    {
+                        shoot(7);
+                        shoot(1);
+                    }
+                    
+                }
+
+                //Controller mode because why not
+                else if ((bControllerMode) && (GetAsyncKeyState(Keys.RButton) == 0))
+                {
+                    flag = m.ReadInt("GTA5.exe+1FB2380");
+                    var ISZOOMED = m.ReadInt("GTA5.exe+1FB23A4");
+                    var ENTITY = m.ReadInt("GTA5.exe+1FB2375");
+                    if (flag >= 1 && bAutoShoot)
+                    {
+                        if (ISZOOMED == 1 && ENTITY == 1)
+                        {
+                            shoot(7);
+                            shoot(1);
+                        }
+                        //Patch for First Person
+                        if (ENTITY == 1)
+                        {
+                            shoot(7);
+                            shoot(1);
+                        }
+                    }
+                    //Patch for Scoped Weapons
                     else if ((ISZOOMED == 1 && ENTITY == 1) && (bAutoShoot))
                     {
                         shoot(7);
@@ -124,6 +160,8 @@ namespace Simple_GTAV_External_Trainer
             if (bAutoShoot && bAllOff)
             {
                 bAutoShoot = false;
+                if (bControllerMode)
+                    bControllerMode = false;
             }
             if (bGodMode && bAllOff)
             {
@@ -143,6 +181,22 @@ namespace Simple_GTAV_External_Trainer
             bAllOff = false;
         }
 
+        private void EJECT()
+        {
+            ALLOFF();
+
+            //Just in case , do a final sweep
+            var GODMODE = "GTA5.exe+25333D8,0x8,0x189";
+            var FLAG = m.ReadByte(GODMODE);
+            if (FLAG == 1)
+            {
+                m.WriteMemory(GODMODE, "byte", "0");
+            }
+            bAutoShoot = false;
+            bGodMode = false;
+            bNeverWanted = false;
+            bControllerMode = false;
+        }
         #endregion
 
         #endregion
@@ -156,7 +210,8 @@ namespace Simple_GTAV_External_Trainer
             keyMgr.AddKey(Keys.F5);         // Auto Shoot
             keyMgr.AddKey(Keys.F6);         // God Mode
             keyMgr.AddKey(Keys.F7);         // Never Wanted
-            keyMgr.AddKey(Keys.F8);         // ALL OFF
+            keyMgr.AddKey(Keys.F8);         // CONTROLLER MODE
+            keyMgr.AddKey(Keys.F9);         // ALL OFF
             keyMgr.KeyDownEvent += new KeysMgr.KeyHandler(KeyDownEvent);
         }
 
@@ -180,6 +235,9 @@ namespace Simple_GTAV_External_Trainer
                     this.bNeverWanted = !this.bNeverWanted;
                     break;
                 case Keys.F8:
+                    this.bControllerMode = !this.bControllerMode;
+                    break;
+                case Keys.F9:
                     this.bAllOff = !this.bAllOff;
                     break;
             }
@@ -225,12 +283,12 @@ namespace Simple_GTAV_External_Trainer
 
         private void Close(object sender, FormClosingEventArgs e)
         {
-            ALLOFF();
             Quit();
         }
 
         private void Quit()
         {
+            EJECT();
             m.CloseProcess();
             Environment.Exit(0);
         }
@@ -300,11 +358,12 @@ namespace Simple_GTAV_External_Trainer
             Rectangle TestBox = new Rectangle(1750, 921, 150, 140);
             PointF HeaderTextPosTest = new PointF(1747.0F, 920.0F);
             PointF MenuOption1PosTest = new PointF(1749.0f, 945.0F);
-            PointF MenuOption2PosTest = new PointF(1749.0f, 965.0F);
-            PointF MenuOption3PosTest = new PointF(1749.0f, 985.0F);
-            PointF MenuOption4PosTest = new PointF(1749.0f, 1015.0F);
-            PointF MenuOption5PosTest = new PointF(1749.0f, 1030.0F);
-            PointF MenuOption6PosTest = new PointF(1749.0f, 1045.0F);
+            PointF MenuOption2PosTest = new PointF(1749.0f, 960.0F);
+            PointF MenuOption3PosTest = new PointF(1749.0f, 975.0F);
+            PointF MenuOption4PosTest = new PointF(1749.0f, 990.0F);
+            PointF MenuOption5PosTest = new PointF(1749.0f, 1015.0F);
+            PointF MenuOption6PosTest = new PointF(1749.0f, 1030.0F);
+            PointF MenuOption7PosTest = new PointF(1749.0f, 1045.0F);
 
             //g.FillRectangle(blackFill, InfoBox);
             g.FillRectangle(blackFill, TestBox);
@@ -312,11 +371,11 @@ namespace Simple_GTAV_External_Trainer
 
             if (!bAutoShoot)
             {
-                g.DrawString("[F5] AUTOSHOOT", InfoTextFont, whiteBrush, MenuOption1PosTest);
+                g.DrawString("[F5] TRIGGERBOT", InfoTextFont, whiteBrush, MenuOption1PosTest);
             }
             else
             {
-                g.DrawString("[F5] AUTOSHOOT", InfoTextFont, GreenBrush, MenuOption1PosTest);
+                g.DrawString("[F5] TRIGGERBOT", InfoTextFont, GreenBrush, MenuOption1PosTest);
             }
             if (!bGodMode)
             {
@@ -334,12 +393,18 @@ namespace Simple_GTAV_External_Trainer
             {
                 g.DrawString("[F7] NEVER WANTED", InfoTextFont, GreenBrush, MenuOption3PosTest);
             }
-            g.DrawString("ALL OFF [F8]", InfoTextFont, redBrush, MenuOption4PosTest);
-            g.DrawString("SHOW / HIDE [INSERT]", InfoTextFont, redBrush, MenuOption5PosTest);
-            g.DrawString("QUIT MENU [DELETE]", InfoTextFont, redBrush, MenuOption6PosTest);
+            if (!bControllerMode)
+            {
+                g.DrawString("[F8] CONTROLLER", InfoTextFont, whiteBrush, MenuOption4PosTest);
+            }
+            else
+            {
+                g.DrawString("[F8] CONTROLLER", InfoTextFont, GreenBrush, MenuOption4PosTest);
+            }
+            g.DrawString("ALL OFF [F9]", InfoTextFont, redBrush, MenuOption5PosTest);
+            g.DrawString("SHOW / HIDE [INSERT]", InfoTextFont, redBrush, MenuOption6PosTest);
+            g.DrawString("QUIT MENU [DELETE]", InfoTextFont, redBrush, MenuOption7PosTest);
         }
-
         #endregion
-
     }
 }
