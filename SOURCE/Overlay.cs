@@ -74,9 +74,20 @@ namespace Simple_GTAV_External_Trainer
                 if (GetAsyncKeyState(Keys.RButton) < 0)
                 {
                     flag = m.ReadInt("GTA5.exe+1FB2380");
+                    var ISZOOMED = m.ReadInt("GTA5.exe+1FB23A4");
+                    var ENTITY = m.ReadInt("GTA5.exe+1FB2375");
                     if (flag >= 1 && bAutoShoot)
                     {
-                        shoot(10);
+                        if (ISZOOMED == 1 && ENTITY == 1)
+                        {
+                            shoot(7);
+                            shoot(1);
+                        }
+                    }
+                    //Quick Patch for Scoped Weapons
+                    else if ((ISZOOMED == 1 && ENTITY == 1) && (bAutoShoot))
+                    {
+                        shoot(7);
                         shoot(1);
                     }
                 }
@@ -84,7 +95,7 @@ namespace Simple_GTAV_External_Trainer
             }
         }
 
-        private void GodMode()
+        private void GODMODE()
         {
             var GODMODE = "GTA5.exe+25333D8,0x8,0x189";
             var FLAG = m.ReadByte(GODMODE);
@@ -98,7 +109,7 @@ namespace Simple_GTAV_External_Trainer
             }
         }
 
-        private void NeverWanted()
+        private void NEVERWANTED()
         {
             var WANTEDLEVEL = "GTA5.exe+25333D8,0x8,0x10C8,0x888";
             var FLAG = m.ReadByte(WANTEDLEVEL);
@@ -244,8 +255,8 @@ namespace Simple_GTAV_External_Trainer
             {
                 return;
             }
-            GodMode();
-            NeverWanted();
+            GODMODE();
+            NEVERWANTED();
             ALLOFF();
         }
         
