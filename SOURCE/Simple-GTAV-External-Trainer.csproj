@@ -75,6 +75,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\gData.cs" />
     <Compile Include="Helpers\Key.cs" />
     <Compile Include="Helpers\KeysMgr.cs" />
     <Compile Include="Helpers\Manager.cs" />

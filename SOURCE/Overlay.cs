@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using Simple_GTAV_External_Trainer.Helpers;
+using System.Runtime.InteropServices;
 using GTAV_External_Trainer.Helpers;
 using System.Windows.Forms;
 using System.Threading;
@@ -49,6 +50,7 @@ namespace Simple_GTAV_External_Trainer
         private bool bControllerMode = false;
         private bool bInfiniteAmmo = false;
         private bool bRPBoost = false;
+        private bool bPerfectWeapon = false;
 
         [DllImport("user32.dll")]
         static extern short GetAsyncKeyState(System.Windows.Forms.Keys vKey);
@@ -63,7 +65,6 @@ namespace Simple_GTAV_External_Trainer
         #region METHODS
 
         #region FUNCTION KEYS
-
         void shoot(int delay)
         {
             mouse_event(leftDown, 0, 0, 0, 0);
@@ -74,14 +75,14 @@ namespace Simple_GTAV_External_Trainer
 
         void triggerbot()
         {
-
             while (true)
             {
+                flag = m.ReadInt(gData.ENEMY_IN_CROSSHAIRS);
+                var ISZOOMED = m.ReadInt(gData.IS_ZOOMED);
+                var ENTITY = m.ReadInt(gData.ENTITY);
+
                 if ((GetAsyncKeyState(Keys.RButton) < 0) && (!bControllerMode))
                 {
-                    flag = m.ReadInt("GTA5.exe+1FB2380");
-                    var ISZOOMED = m.ReadInt("GTA5.exe+1FB23A4");
-                    var ENTITY = m.ReadInt("GTA5.exe+1FB2375");
                     if (flag >= 1 && bAutoShoot)
                     {
                         if (ISZOOMED == 1 && ENTITY != 0)
@@ -108,9 +109,6 @@ namespace Simple_GTAV_External_Trainer
                 //Controller mode because why not
                 else if ((bControllerMode) && (GetAsyncKeyState(Keys.RButton) == 0))
                 {
-                    flag = m.ReadInt("GTA5.exe+1FB2380");
-                    var ISZOOMED = m.ReadInt("GTA5.exe+1FB23A4");
-                    var ENTITY = m.ReadInt("GTA5.exe+1FB2375");
                     if (flag >= 1 && bAutoShoot)
                     {
                         if (ISZOOMED == 1 && ENTITY != 0)
@@ -138,43 +136,36 @@ namespace Simple_GTAV_External_Trainer
 
         private void GODMODE()
         {
-            var GODMODE = "GTA5.exe+25333D8,0x8,0x189";
-            var FLAG = m.ReadByte(GODMODE);
-            if (FLAG == 0 && bGodMode)
+            if (m.ReadByte(gData.GODMODE) == 0 && bGodMode)
             {
-                m.WriteMemory(GODMODE, "byte", "1");
+                m.WriteMemory(gData.GODMODE, "byte", "1");
             }
-            if (FLAG == 1 && !bGodMode)
+            if (m.ReadByte(gData.GODMODE) == 1 && !bGodMode)
             {
-                m.WriteMemory(GODMODE, "byte", "0");
+                m.WriteMemory(gData.GODMODE, "byte", "0");
             }
         }
 
         private void NEVERWANTED()
         {
-            var WANTEDLEVEL = "GTA5.exe+25333D8,0x8,0x10C8,0x888";
-            var FLAG = m.ReadByte(WANTEDLEVEL);
-            if (FLAG >= 1 && bNeverWanted)
+            if (m.ReadByte(gData.WANTED_LEVEL) >= 1 && bNeverWanted)
             {
-                m.WriteMemory(WANTEDLEVEL, "byte", "0");
+                m.WriteMemory(gData.WANTED_LEVEL, "byte", "0");
             }
         }
-
         #endregion
 
         #region NUMPAD
         private void INFINITEAMMO()
         {
-            var ADDRESS = "GTA5.exe+25333D8,0x8,0x10D0,0x78";
-            var FLAG = m.ReadByte(ADDRESS);
-            if (bInfiniteAmmo)
+            if (m.ReadByte(gData.INFINITE_AMMO) != 2 && bInfiniteAmmo)
             {
-                m.FreezeValue(ADDRESS, "byte", "2");
+                m.FreezeValue(gData.INFINITE_AMMO, "byte", "2");
             }
-            else if (FLAG == 2 && !bInfiniteAmmo)
+            else if (m.ReadByte(gData.INFINITE_AMMO) != 0 && !bInfiniteAmmo)
             {
-                m.UnfreezeValue(ADDRESS);
-                m.WriteMemory(ADDRESS, "byte", "0");
+                m.UnfreezeValue(gData.INFINITE_AMMO);
+                m.WriteMemory(gData.INFINITE_AMMO, "byte", "0");
             }
         }
 
@@ -191,11 +182,41 @@ namespace Simple_GTAV_External_Trainer
 
         private void RPBOOSTER()
         {
-            var WANTEDADDRESS = "GTA5.exe+25333D8,0x8,0x10c8,0x888";
-            m.WriteMemory(WANTEDADDRESS, "byte", "5");
+            m.WriteMemory(gData.WANTED_LEVEL, "byte", "5");
             Thread.Sleep(500);
-            m.WriteMemory(WANTEDADDRESS, "byte", "0");
+            m.WriteMemory(gData.WANTED_LEVEL, "byte", "0");
             Thread.Sleep(500);
+        }
+
+        private void WEAPONHACK()
+        {
+            while (true)
+            {
+                if (bPerfectWeapon)
+                {
+                    // FIRST PISTOL
+                    if ((m.ReadFloat(gData.WEAPON_DAMAGE) == 26) && (m.ReadFloat(gData.WEAPON_MVELOCITY) == 2000))
+                    {
+                        m.WriteMemory(gData.WEAPON_DAMAGE, "float", "101");
+                        m.WriteMemory(gData.WEAPON_SPREAD, "float", "0");
+                        m.WriteMemory(gData.WEAPON_BPENETRATION, "float", "1");
+                        m.WriteMemory(gData.WEAPON_MVELOCITY, "float", "5000");
+                        m.WriteMemory(gData.WEAPON_RANGE, "float", "1500");
+                    }
+                }
+                else
+                {
+                    if (m.ReadFloat(gData.WEAPON_DAMAGE) == 101)
+                    {
+                        m.WriteMemory(gData.WEAPON_DAMAGE, "float", PistolData.Damage);
+                        m.WriteMemory(gData.WEAPON_SPREAD, "float", PistolData.Spread);
+                        m.WriteMemory(gData.WEAPON_BPENETRATION, "float", PistolData.Penetration);
+                        m.WriteMemory(gData.WEAPON_MVELOCITY, "float", PistolData.Velocity);
+                        m.WriteMemory(gData.WEAPON_RANGE, "float", PistolData.Range);
+                    }
+                }
+                Thread.Sleep(100);
+            }
         }
         #endregion
 
@@ -210,11 +231,9 @@ namespace Simple_GTAV_External_Trainer
             }
             if (bGodMode && bAllOff)
             {
-                var GODMODE = "GTA5.exe+25333D8,0x8,0x189";
-                var FLAG = m.ReadByte(GODMODE);
-                if (FLAG == 1)
+                if (m.ReadByte(gData.GODMODE) == 1)
                 {
-                    m.WriteMemory(GODMODE, "byte", "0");
+                    m.WriteMemory(gData.GODMODE, "byte", "0");
                 }
 
                 bGodMode = false;
@@ -225,14 +244,28 @@ namespace Simple_GTAV_External_Trainer
             }
             if (bInfiniteAmmo && bAllOff)
             {
-                var ADDRESS = "GTA5.exe+25333D8,0x8,0x10D0,0x78";
-                var FLAG = m.ReadByte(ADDRESS);
-                if (FLAG == 2)
+                if (m.ReadByte(gData.INFINITE_AMMO) == 2)
                 {
-                    m.UnfreezeValue(ADDRESS);
-                    m.WriteMemory(ADDRESS, "byte", "0");
+                    m.UnfreezeValue(gData.INFINITE_AMMO);
+                    m.WriteMemory(gData.INFINITE_AMMO, "byte", "0");
                 }
                 bInfiniteAmmo = false;
+            }
+            if (bRPBoost && bAllOff)
+            {
+                bRPBoost = false;
+            }
+            if (bPerfectWeapon && bAllOff)
+            {
+                if (m.ReadFloat(gData.WEAPON_DAMAGE) == 101)
+                {
+                    m.WriteMemory(gData.WEAPON_DAMAGE, "float", PistolData.Damage);
+                    m.WriteMemory(gData.WEAPON_SPREAD, "float", PistolData.Spread);
+                    m.WriteMemory(gData.WEAPON_BPENETRATION, "float", PistolData.Penetration);
+                    m.WriteMemory(gData.WEAPON_MVELOCITY, "float", PistolData.Velocity);
+                    m.WriteMemory(gData.WEAPON_RANGE, "float", PistolData.Range);
+                }
+                bPerfectWeapon = false;
             }
             bAllOff = false;
         }
@@ -243,24 +276,29 @@ namespace Simple_GTAV_External_Trainer
             ALLOFF();
 
             //Just in case , do a final sweep
-            var GODMODE = "GTA5.exe+25333D8,0x8,0x189";
-            var INFINITEAMMO = "GTA5.exe+25333D8,0x8,0x10D0,0x78";
-            var FLAG2 = m.ReadByte(INFINITEAMMO);
-            var FLAG1 = m.ReadByte(GODMODE);
-            if (FLAG1 == 1)
+            if (m.ReadByte(gData.GODMODE) == 1)
             {
-                m.WriteMemory(GODMODE, "byte", "0");
+                m.WriteMemory(gData.GODMODE, "byte", "0");
             }
-            if (FLAG2 == 2)
+            if (m.ReadByte(gData.INFINITE_AMMO) == 2)
             {
-                m.UnfreezeValue(INFINITEAMMO);
-                m.WriteMemory(INFINITEAMMO, "byte", "0");
+                m.UnfreezeValue(gData.INFINITE_AMMO);
+                m.WriteMemory(gData.INFINITE_AMMO, "byte", "0");
+            }
+            if (m.ReadFloat(gData.WEAPON_DAMAGE) == 101)
+            {
+                m.WriteMemory(gData.WEAPON_DAMAGE, "float", PistolData.Damage);
+                m.WriteMemory(gData.WEAPON_SPREAD, "float", PistolData.Spread);
+                m.WriteMemory(gData.WEAPON_BPENETRATION, "float", PistolData.Penetration);
+                m.WriteMemory(gData.WEAPON_MVELOCITY, "float", PistolData.Velocity);
+                m.WriteMemory(gData.WEAPON_RANGE, "float", PistolData.Range);
             }
             bAutoShoot = false;
             bGodMode = false;
             bNeverWanted = false;
             bControllerMode = false;
             bInfiniteAmmo = false;
+            bPerfectWeapon = false;
             bRPBoost = false;
         }
         #endregion
@@ -282,6 +320,7 @@ namespace Simple_GTAV_External_Trainer
             keyMgr.AddKey(Keys.F9);         // ALL OFF
             keyMgr.AddKey(Keys.NumPad1);    // INFINITE AMMO
             keyMgr.AddKey(Keys.NumPad2);    // RPBooster
+            keyMgr.AddKey(Keys.NumPad3);    // Perfect Weapon (SOCOM INSPIRED)
             keyMgr.KeyDownEvent += new KeysMgr.KeyHandler(KeyDownEvent);
         }
 
@@ -316,6 +355,9 @@ namespace Simple_GTAV_External_Trainer
                 case Keys.NumPad2:
                     this.bRPBoost = !this.bRPBoost;
                     break;
+                case Keys.NumPad3:
+                    this.bPerfectWeapon = !this.bPerfectWeapon;
+                    break;
             }
         }
         #endregion
@@ -337,6 +379,8 @@ namespace Simple_GTAV_External_Trainer
                 TB.Start();
                 Thread WANTEDXPHACK = new Thread(WANTEDHACK) { IsBackground = true };
                 WANTEDXPHACK.Start();
+                Thread PERFECTWEAPONHACK = new Thread(WEAPONHACK) { IsBackground = true };
+                PERFECTWEAPONHACK.Start();
             }
             this.BackColor = Color.Orange;
             this.TransparencyKey = Color.Orange;
@@ -443,8 +487,9 @@ namespace Simple_GTAV_External_Trainer
             PointF MenuOption2PosTest = new PointF(1749.0f, 920.0F);    //GODMODE
             PointF MenuOption3PosTest = new PointF(1749.0f, 935.0F);    //NEVERWANTED
             PointF MenuOption4PosTest = new PointF(1749.0f, 950.0F);    //CONTROLLER
-            PointF MenuOption8PosTest = new PointF(1749.0f, 975.0f);    //INFINITE AMMO
-            PointF MenuOption9PosTest = new PointF(1749.0f, 990.0f);   //RP BOOSTER
+            PointF MenuOption8PosTest = new PointF(1749.0f, 970.0f);    //INFINITE AMMO
+            PointF MenuOption9PosTest = new PointF(1749.0f, 985.0f);    //RP BOOSTER
+            PointF MenuOption10PosTest = new PointF(1749.0f, 1000.0f);    //Perfect Weapon
 
             PointF MenuOption5PosTest = new PointF(1749.0f, 1015.0F);   //ALL OFF
             PointF MenuOption6PosTest = new PointF(1749.0f, 1030.0F);   //SHOW HIDE
@@ -502,10 +547,19 @@ namespace Simple_GTAV_External_Trainer
             {
                 g.DrawString("[2] RP BOOSTER", InfoTextFont, GreenBrush, MenuOption9PosTest);
             }
+            if (!bPerfectWeapon)
+            {
+                g.DrawString("[3] PERFECT WEAPON", InfoTextFont, whiteBrush, MenuOption10PosTest);
+            }
+            else
+            {
+                g.DrawString("[3] PERFECT WEAPON", InfoTextFont, GreenBrush, MenuOption10PosTest);
+            }
             g.DrawString("ALL OFF [F9]", InfoTextFont, redBrush, MenuOption5PosTest);
             g.DrawString("SHOW / HIDE [INSERT]", InfoTextFont, redBrush, MenuOption6PosTest);
             g.DrawString("QUIT MENU [DELETE]", InfoTextFont, redBrush, MenuOption7PosTest);
         }
         #endregion
+
     }
 }
