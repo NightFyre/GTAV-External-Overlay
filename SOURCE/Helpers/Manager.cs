@@ -142,18 +142,10 @@ namespace GTAV_External_Trainer.Helpers
         public const int VK_Z = 0x5A;
 
         [DllImport("user32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
-
-        [DllImport("user32.dll")]
-        public static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
-
-        [DllImport("user32.dll")]
         public static extern short GetKeyState(int KeyStates);
 
-        [DllImport("dwmapi.dll")]
-        public static extern void DwmExtendFrameIntoClientArea(IntPtr hWnd, ref int[] pMargins);
-
+        //These will be needed for function hooking (infinite ammo)
+        //Expect an update with that included
         [DllImport("kernel32.dll")]
         public static extern IntPtr OpenProcess(UInt32 dwAccess, bool inherit, int pid);
 
@@ -169,35 +161,5 @@ namespace GTAV_External_Trainer.Helpers
         [DllImport("kernel32.dll")]
         public static extern bool WriteProcessMemory(IntPtr hProcess, Int64 lpBaseAddress, [In, Out] byte[] lpBuffer, UInt64 dwSize, out IntPtr lpNumberOfBytesWritten);
 
-        [DllImport("user32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
-
-        [DllImport("user32.dll", SetLastError = true)]
-        public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
-
-        [DllImport("user32.dll")]
-        public static extern bool GetClientRect(IntPtr hWnd, out RECT lpRect);
-
-        [DllImport("user32.dll", SetLastError = true)]
-        public static extern int GetWindowLong(IntPtr hWnd, int nIndex);
-
-        [DllImport("User32.dll")]
-        public static extern bool MoveWindow(IntPtr handle, int x, int y, int width, int height, bool redraw);
-
-        [DllImport("user32.dll", CharSet = CharSet.None, ExactSpelling = false)]
-        public static extern int ShowWindow(int Handle, int showState);
-
-        [DllImport("kernel32.dll", CharSet = CharSet.None, ExactSpelling = false)]
-        public static extern int GetConsoleWindow();
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    public struct RECT
-    {
-        public int Left;        // x position of upper-left corner
-        public int Top;         // y position of upper-left corner
-        public int Right;       // x position of lower-right corner
-        public int Bottom;      // y position of lower-right corner
     }
 }

@@ -1,18 +1,16 @@
 ﻿using System.Runtime.InteropServices;
-using System.Security.Principal;
+using GTAV_External_Trainer.Helpers;
 using System.Windows.Forms;
-using System.Diagnostics;
-using System.Reflection;
 using System.Threading;
 using System.Drawing;
 using Memory;
 using System;
-using GTAV_External_Trainer.Helpers;
 
 namespace Simple_GTAV_External_Trainer
 {
     public partial class Overlay : Form
     {
+
         #region WINDOW SETUP
 
         public const string WINDOW_NAME = "Grand Theft Auto V";
@@ -37,9 +35,6 @@ namespace Simple_GTAV_External_Trainer
         [DllImport("user32.dll")]
         public static extern bool GetWindowRect(IntPtr hwnd, out RECT IpRect);
 
-        [DllImport("user32.dll")]
-        static extern short GetAsyncKeyState(System.Windows.Forms.Keys vKey);
-
         #endregion
 
         #region PROCESS INFO
@@ -51,6 +46,9 @@ namespace Simple_GTAV_External_Trainer
         private bool bGodMode = false;
         private bool bNeverWanted = false;
         private bool bAllOff = false;
+
+        [DllImport("user32.dll")]
+        static extern short GetAsyncKeyState(System.Windows.Forms.Keys vKey);
 
         [DllImport("user32.dll")]
         public static extern void mouse_event(int a, int b, int c, int d, int damnIwonderifpeopleactuallyreadsthis);
@@ -90,11 +88,11 @@ namespace Simple_GTAV_External_Trainer
         {
             var GODMODE = "GTA5.exe+25333D8,0x8,0x189";
             var FLAG = m.ReadByte(GODMODE);
-            if (FLAG == 1 && bGodMode)
+            if (FLAG == 0 && bGodMode)
             {
                 m.WriteMemory(GODMODE, "byte", "1");
             }
-            if (FLAG == 0 && !bGodMode)
+            if (FLAG == 1 && !bGodMode)
             {
                 m.WriteMemory(GODMODE, "byte", "0");
             }
@@ -131,6 +129,7 @@ namespace Simple_GTAV_External_Trainer
             {
                 bNeverWanted = false;
             }
+            bAllOff = false;
         }
 
         #endregion
@@ -142,26 +141,12 @@ namespace Simple_GTAV_External_Trainer
         {
             KeysMgr keyMgr = new KeysMgr();
             keyMgr.AddKey(Keys.Insert);     // MENU
-            keyMgr.AddKey(Keys.Up);         // UP
-            keyMgr.AddKey(Keys.Down);       // DOWN
             keyMgr.AddKey(Keys.Delete);     // QUIT
-
             keyMgr.AddKey(Keys.F5);         // Auto Shoot
             keyMgr.AddKey(Keys.F6);         // God Mode
             keyMgr.AddKey(Keys.F7);         // Never Wanted
             keyMgr.AddKey(Keys.F8);         // ALL OFF
-
-            keyMgr.AddKey(Keys.F10);        // Show Box
-
-            keyMgr.AddKey(Keys.Left);
-            keyMgr.AddKey(Keys.Right);
-
             keyMgr.KeyDownEvent += new KeysMgr.KeyHandler(KeyDownEvent);
-        }
-
-        public static bool IsKeyDown(int key)
-        {
-            return Convert.ToBoolean(Manager.GetKeyState(key) & Manager.KEY_PRESSED);
         }
 
         private void KeyDownEvent(int Id, string Name)
@@ -206,21 +191,16 @@ namespace Simple_GTAV_External_Trainer
                 Thread TB = new Thread(triggerbot) { IsBackground = true };
                 TB.Start();
             }
-
             this.BackColor = Color.Orange;
             this.TransparencyKey = Color.Orange;
             this.TopMost = true;
             this.FormBorderStyle = FormBorderStyle.None;
-
             int InitialStyle = GetWindowLong(this.Handle, -20);
             SetWindowLong(this.Handle, -20, InitialStyle | 0x800000 | 0x20);
-
             GetWindowRect(handle, out rect);
             this.Size = new Size(rect.right - rect.left, rect.bottom - rect.top);
             this.Top = rect.top;
             this.Left = rect.left;
-
-            // Init Key Listener
             KeyAssign();
         }
 
@@ -234,14 +214,13 @@ namespace Simple_GTAV_External_Trainer
 
         private void Close(object sender, FormClosingEventArgs e)
         {
+            ALLOFF();
             Quit();
         }
 
         private void Quit()
         {
             m.CloseProcess();
-
-            // Close main process
             Environment.Exit(0);
         }
 
@@ -285,14 +264,6 @@ namespace Simple_GTAV_External_Trainer
 
         #region DRAW
 
-        public void DrawEntityBox(object sender, PaintEventArgs e)
-        {
-            Graphics g = e.Graphics;
-            Pen entityOutline = new Pen(Color.Red);
-            Rectangle EntitySize = new Rectangle(693, 328, 80, 195);
-            g.DrawRectangle(entityOutline, EntitySize);
-        }
-
         public void DrawMenuInfo(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
@@ -304,7 +275,7 @@ namespace Simple_GTAV_External_Trainer
             Font HeaderFont = new Font("Arial", 16);
             Font InfoTextFont = new Font("Arial", 10);
 
-            //Menu Position 1
+            //Menu Position 1 || TOP LEFT
             PointF HeaderTextPos = new PointF(0.0F, 25.0F);
             PointF MenuOption1Pos = new PointF(2.0F, 50.0F);
             PointF MenuOption2Pos = new PointF(2.0F, 70.0F);
@@ -314,7 +285,7 @@ namespace Simple_GTAV_External_Trainer
             PointF MenuOption6Pos = new PointF(2.0F, 150.0F);
             Rectangle InfoBox = new Rectangle(3, 26, 155, 140);
 
-            //Menu Position 2
+            //Menu Position 2 || BOTTOM RIGHT
             Rectangle TestBox = new Rectangle(1750, 921, 150, 140);
             PointF HeaderTextPosTest = new PointF(1747.0F, 920.0F);
             PointF MenuOption1PosTest = new PointF(1749.0f, 945.0F);
