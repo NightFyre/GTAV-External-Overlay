@@ -44,6 +44,21 @@
         public const string pVelocity = "5000";
         public const string pRange = "1500";
         public const string pRecoil = "0";      //NEW
+
+        //Vehicle Data
+        public const string VehicleID = "GTA5.exe+25333D8,0x8,0xD30";
+        public const string VehicleState = "GTA5.exe+25333D8,0x8,0x1477";
+        public const string VehicleDirt = "GTA5.exe+25333D8,0x8,0xD30,0x9F8";
+        public const string VehicleHealth = "GTA5.exe+25333D8,0x8,0xD30,280";
+        public const string EngineHealth = "GTA5.exe+25333D8,0x8,0xD30,908";
+        public const string VehicleGravity = "GTA5.exe+25333D8,0x8,0xD30,C5C";
+
+        //Vehicle Handling Data
+        public const string VehicleAcceleration = "GTA5.exe+25333D8,0x8,0xD30,0x938,0x4C";
+        public const string VehBrakeForce = "GTA5.exe+25333D8,0x8,0xD30,0x938,0x6C";
+        public const string VehHandbrakeforce = "GTA5.exe+25333D8,0x8,0xD30,0x938,0x7C";
+        public const string VehDamageMultiplier = "GTA5.exe+25333D8,0x8,0xD30,0x938,0xF0";
+        public const string VehCollisionMultiplier = "GTA5.exe+25333D8,0x8,0xD30,0x938,0xF8";
     }
 
     /// <summary>

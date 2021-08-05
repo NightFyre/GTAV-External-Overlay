@@ -62,6 +62,7 @@ namespace Simple_GTAV_External_Trainer
             this.MinimizeBox = false;
             this.Name = "Overlay";
             this.Text = "NightFyreTV";
+            this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Close);
             this.Load += new System.EventHandler(this.Initialize);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.DrawPaint);
