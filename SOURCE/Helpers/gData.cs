@@ -122,6 +122,15 @@
         public const string Range = "1000";
     }
 
+    class PumpShotgun
+    {
+        public const string Damage = "29";
+        public const string Spread = "2";
+        public const string Penetration = "0.009999999776";
+        public const string Velocity = "2000";
+        public const string Range = "40";
+    }
+
     class HeavyShotgunData
     {
         public const string Damage = "117";

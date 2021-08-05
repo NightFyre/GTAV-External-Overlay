@@ -6,6 +6,7 @@ using System.Threading;
 using System.Drawing;
 using Memory;
 using System;
+using System.Collections.Generic;
 
 namespace Simple_GTAV_External_Trainer
 {
@@ -58,6 +59,8 @@ namespace Simple_GTAV_External_Trainer
         private bool bAssaultRifle = false, bSpecialCarbine = false, bBullpupRifle = false, bMilitaryRifle = false;
         private bool bSniperRifle = false, bMarksmanRifle = false;
         private bool bHeavyShotgun = false;
+
+        Dictionary<string, string> data = new Dictionary<string, string>();
 
         [DllImport("user32.dll")]
         static extern short GetAsyncKeyState(System.Windows.Forms.Keys vKey);
@@ -204,11 +207,20 @@ namespace Simple_GTAV_External_Trainer
                     #region ENABLE
 
                     //PISTOL
-                    if ((m.ReadFloat(gData.WEAPON_DAMAGE) == Convert.ToInt32(PistolData.Damage)) && 
-                        (m.ReadFloat(gData.WEAPON_SPREAD) == Convert.ToInt32(PistolData.Spread)) && 
-                        (m.ReadFloat(gData.WEAPON_MVELOCITY) == Convert.ToInt32(PistolData.Velocity)) && 
+                    if ((m.ReadFloat(gData.WEAPON_DAMAGE) == Convert.ToInt32(PistolData.Damage)) &&
+                        (m.ReadFloat(gData.WEAPON_SPREAD) == Convert.ToInt32(PistolData.Spread)) &&
+                        (m.ReadFloat(gData.WEAPON_MVELOCITY) == Convert.ToInt32(PistolData.Velocity)) &&
                         (m.ReadFloat(gData.WEAPON_RANGE) == Convert.ToInt32(PistolData.Range)))
                     {
+                        //We need to store the addresses that contain the weapon data
+                        var baseAddr = m.ReadLong("GTA5.exe+25333D8,0x8,0x10D8,0x20");
+                        data.Add("PistolBase", baseAddr.ToString("X"));
+                        data.Add("PistolWD", (baseAddr + 0xB0).ToString("X"));
+                        data.Add("PistolWS", (baseAddr + 0x7C).ToString("X"));
+                        data.Add("PistolWP", (baseAddr + 0x110).ToString("X"));
+                        data.Add("PistolWV", (baseAddr + 0x11C).ToString("X"));
+                        data.Add("PistolWR", (baseAddr + 0x28C).ToString("X"));
+
                         bPistol = true;
                         m.WriteMemory(gData.WEAPON_DAMAGE, "float", "150");
                         m.WriteMemory(gData.WEAPON_SPREAD, "float", "0");
@@ -223,6 +235,14 @@ namespace Simple_GTAV_External_Trainer
                         (m.ReadFloat(gData.WEAPON_MVELOCITY) == Convert.ToInt32(CombatPistolData.Velocity)) &&
                         (m.ReadFloat(gData.WEAPON_RANGE) == Convert.ToInt32(CombatPistolData.Range)))
                     {
+                        var baseAddr = m.ReadLong("GTA5.exe+25333D8,0x8,0x10D8,0x20");
+                        data.Add("CPistolBase", baseAddr.ToString("X"));
+                        data.Add("CPistolWD", (baseAddr + 0xB0).ToString("X"));
+                        data.Add("CPistolWS", (baseAddr + 0x7C).ToString("X"));
+                        data.Add("CPistolWP", (baseAddr + 0x110).ToString("X"));
+                        data.Add("CPistolWV", (baseAddr + 0x11C).ToString("X"));
+                        data.Add("CPistolWR", (baseAddr + 0x28C).ToString("X"));
+
                         bCombatPistol = true;
                         m.WriteMemory(gData.WEAPON_DAMAGE, "float", "150");
                         m.WriteMemory(gData.WEAPON_SPREAD, "float", "0");
@@ -237,7 +257,20 @@ namespace Simple_GTAV_External_Trainer
                         (m.ReadFloat(gData.WEAPON_MVELOCITY) == Convert.ToInt32(MicroSMGData.Velocity)) &&
                         (m.ReadFloat(gData.WEAPON_RANGE) == Convert.ToInt32(MicroSMGData.Range)))
                     {
+                        var baseAddr = m.ReadLong("GTA5.exe+25333D8,0x8,0x10D8,0x20");
+                        data.Add("MSMGBase", baseAddr.ToString("X"));
+                        data.Add("MSMGWD", (baseAddr + 0xB0).ToString("X"));
+                        data.Add("MSMGWS", (baseAddr + 0x7C).ToString("X"));
+                        data.Add("MSMGWP", (baseAddr + 0x110).ToString("X"));
+                        data.Add("MSMGWV", (baseAddr + 0x11C).ToString("X"));
+                        data.Add("MSMGWR", (baseAddr + 0x28C).ToString("X"));
+                        
                         bMicroSMG = true;
+                        m.WriteMemory(gData.WEAPON_DAMAGE, "float", "150");
+                        m.WriteMemory(gData.WEAPON_SPREAD, "float", "0");
+                        m.WriteMemory(gData.WEAPON_BPENETRATION, "float", "1");
+                        m.WriteMemory(gData.WEAPON_MVELOCITY, "float", "5000");
+                        m.WriteMemory(gData.WEAPON_RANGE, "float", "1500");
 
                     }
 
@@ -247,6 +280,15 @@ namespace Simple_GTAV_External_Trainer
                         (m.ReadFloat(gData.WEAPON_MVELOCITY) == Convert.ToInt32(SMGData.Velocity)) &&
                         (m.ReadFloat(gData.WEAPON_RANGE) == Convert.ToInt32(SMGData.Range)))
                     {
+                        //We need to store the addresses that contain the weapon data
+                        var baseAddr = m.ReadLong("GTA5.exe+25333D8,0x8,0x10D8,0x20");
+                        data.Add("SMGBase", baseAddr.ToString("X"));
+                        data.Add("SMGWD", (baseAddr + 0xB0).ToString("X"));
+                        data.Add("SMGWS", (baseAddr + 0x7C).ToString("X"));
+                        data.Add("SMGWP", (baseAddr + 0x110).ToString("X"));
+                        data.Add("SMGWV", (baseAddr + 0x11C).ToString("X"));
+                        data.Add("SMGWR", (baseAddr + 0x28C).ToString("X"));
+
                         bSMG = true;
                         m.WriteMemory(gData.WEAPON_DAMAGE, "float", "150");
                         m.WriteMemory(gData.WEAPON_SPREAD, "float", "0");
@@ -261,6 +303,15 @@ namespace Simple_GTAV_External_Trainer
                         (m.ReadFloat(gData.WEAPON_MVELOCITY) == Convert.ToInt32(AssaultRifleData.Velocity)) &&
                         (m.ReadFloat(gData.WEAPON_RANGE) == Convert.ToInt32(AssaultRifleData.Range)))
                     {
+                        //We need to store the addresses that contain the weapon data
+                        var baseAddr = m.ReadLong("GTA5.exe+25333D8,0x8,0x10D8,0x20");
+                        data.Add("ARBase", baseAddr.ToString("X"));
+                        data.Add("ARWD", (baseAddr + 0xB0).ToString("X"));
+                        data.Add("ARWS", (baseAddr + 0x7C).ToString("X"));
+                        data.Add("ARWP", (baseAddr + 0x110).ToString("X"));
+                        data.Add("ARWV", (baseAddr + 0x11C).ToString("X"));
+                        data.Add("ARWR", (baseAddr + 0x28C).ToString("X"));
+
                         bAssaultRifle = true;
                         m.WriteMemory(gData.WEAPON_DAMAGE, "float", "150");
                         m.WriteMemory(gData.WEAPON_SPREAD, "float", "0");
@@ -275,6 +326,15 @@ namespace Simple_GTAV_External_Trainer
                         (m.ReadFloat(gData.WEAPON_MVELOCITY) == Convert.ToInt32(SpecialCarbineData.Velocity)) &&
                         (m.ReadFloat(gData.WEAPON_RANGE) == Convert.ToInt32(SpecialCarbineData.Range)))
                     {
+                        //We need to store the addresses that contain the weapon data
+                        var baseAddr = m.ReadLong("GTA5.exe+25333D8,0x8,0x10D8,0x20");
+                        data.Add("SCBase", baseAddr.ToString("X"));
+                        data.Add("SCWD", (baseAddr + 0xB0).ToString("X"));
+                        data.Add("SCWS", (baseAddr + 0x7C).ToString("X"));
+                        data.Add("SCWP", (baseAddr + 0x110).ToString("X"));
+                        data.Add("SCWV", (baseAddr + 0x11C).ToString("X"));
+                        data.Add("SCWR", (baseAddr + 0x28C).ToString("X"));
+
                         bSpecialCarbine = true;
                         m.WriteMemory(gData.WEAPON_DAMAGE, "float", "150");
                         m.WriteMemory(gData.WEAPON_SPREAD, "float", "0");
@@ -289,6 +349,15 @@ namespace Simple_GTAV_External_Trainer
                         (m.ReadFloat(gData.WEAPON_MVELOCITY) == Convert.ToInt32(BullpupRifleData.Velocity)) &&
                         (m.ReadFloat(gData.WEAPON_RANGE) == Convert.ToInt32(BullpupRifleData.Range)))
                     {
+                        //We need to store the addresses that contain the weapon data
+                        var baseAddr = m.ReadLong("GTA5.exe+25333D8,0x8,0x10D8,0x20");
+                        data.Add("BPRBase", baseAddr.ToString("X"));
+                        data.Add("BPRWD", (baseAddr + 0xB0).ToString("X"));
+                        data.Add("BPRWS", (baseAddr + 0x7C).ToString("X"));
+                        data.Add("BPRWP", (baseAddr + 0x110).ToString("X"));
+                        data.Add("BPRWV", (baseAddr + 0x11C).ToString("X"));
+                        data.Add("BPRWR", (baseAddr + 0x28C).ToString("X"));
+
                         bBullpupRifle = true;
                         m.WriteMemory(gData.WEAPON_DAMAGE, "float", "150");
                         m.WriteMemory(gData.WEAPON_SPREAD, "float", "0");
@@ -303,6 +372,15 @@ namespace Simple_GTAV_External_Trainer
                         (m.ReadFloat(gData.WEAPON_MVELOCITY) == Convert.ToInt32(MilitaryRifleData.Velocity)) &&
                         (m.ReadFloat(gData.WEAPON_RANGE) == Convert.ToInt32(MilitaryRifleData.Range)))
                     {
+                        //We need to store the addresses that contain the weapon data
+                        var baseAddr = m.ReadLong("GTA5.exe+25333D8,0x8,0x10D8,0x20");
+                        data.Add("MiRBase", baseAddr.ToString("X"));
+                        data.Add("MiRWD", (baseAddr + 0xB0).ToString("X"));
+                        data.Add("MiRWS", (baseAddr + 0x7C).ToString("X"));
+                        data.Add("MiRWP", (baseAddr + 0x110).ToString("X"));
+                        data.Add("MiRWV", (baseAddr + 0x11C).ToString("X"));
+                        data.Add("MiRWR", (baseAddr + 0x28C).ToString("X"));
+
                         bMilitaryRifle = true;
                         m.WriteMemory(gData.WEAPON_DAMAGE, "float", "150");
                         m.WriteMemory(gData.WEAPON_SPREAD, "float", "0");
@@ -317,6 +395,15 @@ namespace Simple_GTAV_External_Trainer
                         (m.ReadFloat(gData.WEAPON_MVELOCITY) == Convert.ToInt32(MarksmanRifleData.Velocity)) &&
                         (m.ReadFloat(gData.WEAPON_RANGE) == Convert.ToInt32(MarksmanRifleData.Range)))
                     {
+                        //We need to store the addresses that contain the weapon data
+                        var baseAddr = m.ReadLong("GTA5.exe+25333D8,0x8,0x10D8,0x20");
+                        data.Add("MaRBase", baseAddr.ToString("X"));
+                        data.Add("MaRWD", (baseAddr + 0xB0).ToString("X"));
+                        data.Add("MaRWS", (baseAddr + 0x7C).ToString("X"));
+                        data.Add("MaRWP", (baseAddr + 0x110).ToString("X"));
+                        data.Add("MaRWV", (baseAddr + 0x11C).ToString("X"));
+                        data.Add("MaRWR", (baseAddr + 0x28C).ToString("X"));
+
                         bMarksmanRifle = true;
                         m.WriteMemory(gData.WEAPON_DAMAGE, "float", "150");
                         m.WriteMemory(gData.WEAPON_SPREAD, "float", "0");
@@ -331,6 +418,15 @@ namespace Simple_GTAV_External_Trainer
                         (m.ReadFloat(gData.WEAPON_MVELOCITY) == Convert.ToInt32(SniperRifleData.Velocity)) &&
                         (m.ReadFloat(gData.WEAPON_RANGE) == Convert.ToInt32(SniperRifleData.Range)))
                     {
+                        //We need to store the addresses that contain the weapon data
+                        var baseAddr = m.ReadLong("GTA5.exe+25333D8,0x8,0x10D8,0x20");
+                        data.Add("SnRBase", baseAddr.ToString("X"));
+                        data.Add("SnRWD", (baseAddr + 0xB0).ToString("X"));
+                        data.Add("SnRWS", (baseAddr + 0x7C).ToString("X"));
+                        data.Add("SnRWP", (baseAddr + 0x110).ToString("X"));
+                        data.Add("SnRWV", (baseAddr + 0x11C).ToString("X"));
+                        data.Add("SnRWR", (baseAddr + 0x28C).ToString("X"));
+
                         bSniperRifle = true;
                         m.WriteMemory(gData.WEAPON_DAMAGE, "float", "150");
                         m.WriteMemory(gData.WEAPON_SPREAD, "float", "0");
@@ -345,6 +441,15 @@ namespace Simple_GTAV_External_Trainer
                         (m.ReadFloat(gData.WEAPON_MVELOCITY) == Convert.ToInt32(HeavyShotgunData.Velocity)) &&
                         (m.ReadFloat(gData.WEAPON_RANGE) == Convert.ToInt32(HeavyShotgunData.Range)))
                     {
+                        //We need to store the addresses that contain the weapon data
+                        var baseAddr = m.ReadLong("GTA5.exe+25333D8,0x8,0x10D8,0x20");
+                        data.Add("HSGBase", baseAddr.ToString("X"));
+                        data.Add("HSGWD", (baseAddr + 0xB0).ToString("X"));
+                        data.Add("HSGWS", (baseAddr + 0x7C).ToString("X"));
+                        data.Add("HSGWP", (baseAddr + 0x110).ToString("X"));
+                        data.Add("HSGWV", (baseAddr + 0x11C).ToString("X"));
+                        data.Add("HSGWR", (baseAddr + 0x28C).ToString("X"));
+
                         bHeavyShotgun = true;
                         m.WriteMemory(gData.WEAPON_DAMAGE, "float", "150");
                         m.WriteMemory(gData.WEAPON_SPREAD, "float", "0");
@@ -352,6 +457,7 @@ namespace Simple_GTAV_External_Trainer
                         m.WriteMemory(gData.WEAPON_MVELOCITY, "float", "5000");
                         m.WriteMemory(gData.WEAPON_RANGE, "float", "1500");
                     }
+
                     #endregion
                 }
                 else if (!bPerfectWeapon)
@@ -359,101 +465,222 @@ namespace Simple_GTAV_External_Trainer
                     #region DISABLE
                     if (bPistol)
                     {
-                        m.WriteMemory(gData.WEAPON_DAMAGE, "float", PistolData.Damage);
-                        m.WriteMemory(gData.WEAPON_SPREAD, "float", PistolData.Spread);
-                        m.WriteMemory(gData.WEAPON_BPENETRATION, "float", PistolData.Penetration);
-                        m.WriteMemory(gData.WEAPON_MVELOCITY, "float", PistolData.Velocity);
-                        m.WriteMemory(gData.WEAPON_RANGE, "float", PistolData.Range);
+                        string Damage = data["PistolWD"];
+                        string Spread = data["PistolWS"];
+                        string Penetration = data["PistolWP"];
+                        string Velocity = data["PistolWV"];
+                        string Range = data["PistolWR"];
+                        m.WriteMemory(Damage, "float", PistolData.Damage);
+                        m.WriteMemory(Spread, "float", PistolData.Spread);
+                        m.WriteMemory(Penetration, "float", PistolData.Penetration);
+                        m.WriteMemory(Velocity, "float", PistolData.Velocity);
+                        m.WriteMemory(Range, "float", PistolData.Range);
+                        data.Remove("PistolBase");
+                        data.Remove("PistolWD");
+                        data.Remove("PistolWS");
+                        data.Remove("PistolWP");
+                        data.Remove("PistolWV");
+                        data.Remove("PistolWR");
                         bPistol = false;
                     }
                     if (bCombatPistol)
                     {
-                        m.WriteMemory(gData.WEAPON_DAMAGE, "float", CombatPistolData.Damage);
-                        m.WriteMemory(gData.WEAPON_SPREAD, "float", CombatPistolData.Spread);
-                        m.WriteMemory(gData.WEAPON_BPENETRATION, "float", CombatPistolData.Penetration);
-                        m.WriteMemory(gData.WEAPON_MVELOCITY, "float", CombatPistolData.Velocity);
-                        m.WriteMemory(gData.WEAPON_RANGE, "float", CombatPistolData.Range);
+                        string Damage = data["CPistolWD"];
+                        string Spread = data["CPistolWS"];
+                        string Penetration = data["CPistolWP"];
+                        string Velocity = data["CPistolWV"];
+                        string Range = data["CPistolWR"];
+                        m.WriteMemory(Damage, "float", CombatPistolData.Damage);
+                        m.WriteMemory(Spread, "float", CombatPistolData.Spread);
+                        m.WriteMemory(Penetration, "float", CombatPistolData.Penetration);
+                        m.WriteMemory(Velocity, "float", CombatPistolData.Velocity);
+                        m.WriteMemory(Range, "float", CombatPistolData.Range);
+                        data.Remove("CPistolBase");
+                        data.Remove("CPistolWD");
+                        data.Remove("CPistolWS");
+                        data.Remove("CPistolWP");
+                        data.Remove("CPistolWV");
+                        data.Remove("CPistolWR");
                         bCombatPistol = false;
                     }
                     if (bMicroSMG)
                     {
-                        m.WriteMemory(gData.WEAPON_DAMAGE, "float", MicroSMGData.Damage);
-                        m.WriteMemory(gData.WEAPON_SPREAD, "float", MicroSMGData.Spread);
-                        m.WriteMemory(gData.WEAPON_BPENETRATION, "float", MicroSMGData.Penetration);
-                        m.WriteMemory(gData.WEAPON_MVELOCITY, "float", MicroSMGData.Velocity);
-                        m.WriteMemory(gData.WEAPON_RANGE, "float", MicroSMGData.Range);
+                        string Damage = data["MSMGWD"];
+                        string Spread = data["MSMGWS"];
+                        string Penetration = data["MSMGWP"];
+                        string Velocity = data["MSMGWV"];
+                        string Range = data["MSMGWR"];
+                        m.WriteMemory(Damage, "float", MicroSMGData.Damage);
+                        m.WriteMemory(Spread, "float", MicroSMGData.Spread);
+                        m.WriteMemory(Penetration, "float", MicroSMGData.Penetration);
+                        m.WriteMemory(Velocity, "float", MicroSMGData.Velocity);
+                        m.WriteMemory(Range, "float", MicroSMGData.Range);
+                        data.Remove("MSMGBase");
+                        data.Remove("MSMGWD");
+                        data.Remove("MSMGWS");
+                        data.Remove("MSMGWP");
+                        data.Remove("MSMGWV");
+                        data.Remove("MSMGWR");
                         bMicroSMG = false;
                     }
                     if (bSMG)
                     {
-                        m.WriteMemory(gData.WEAPON_DAMAGE, "float", SMGData.Damage);
-                        m.WriteMemory(gData.WEAPON_SPREAD, "float", SMGData.Spread);
-                        m.WriteMemory(gData.WEAPON_BPENETRATION, "float", SMGData.Penetration);
-                        m.WriteMemory(gData.WEAPON_MVELOCITY, "float", SMGData.Velocity);
-                        m.WriteMemory(gData.WEAPON_RANGE, "float", SMGData.Range);
+                        string Damage = data["SMGWD"];
+                        string Spread = data["SMGWS"];
+                        string Penetration = data["SMGWP"];
+                        string Velocity = data["SMGWV"];
+                        string Range = data["SMGWR"];
+                        m.WriteMemory(Damage, "float", SMGData.Damage);
+                        m.WriteMemory(Spread, "float", SMGData.Spread);
+                        m.WriteMemory(Penetration, "float", SMGData.Penetration);
+                        m.WriteMemory(Velocity, "float", SMGData.Velocity);
+                        m.WriteMemory(Range, "float", SMGData.Range);
+                        data.Remove("SMGBase");
+                        data.Remove("SMGWD");
+                        data.Remove("SMGWS");
+                        data.Remove("SMGWP");
+                        data.Remove("SMGWV");
+                        data.Remove("SMGWR");
                         bSMG = false;
                     }
                     if (bAssaultRifle)
                     {
-                        m.WriteMemory(gData.WEAPON_DAMAGE, "float", AssaultRifleData.Damage); ;
-                        m.WriteMemory(gData.WEAPON_SPREAD, "float", AssaultRifleData.Spread);
-                        m.WriteMemory(gData.WEAPON_BPENETRATION, "float", AssaultRifleData.Penetration);
-                        m.WriteMemory(gData.WEAPON_MVELOCITY, "float", AssaultRifleData.Velocity);
-                        m.WriteMemory(gData.WEAPON_RANGE, "float", AssaultRifleData.Range);
+                        string Damage = data["ARWD"];
+                        string Spread = data["ARWS"];
+                        string Penetration = data["ARWP"];
+                        string Velocity = data["ARWV"];
+                        string Range = data["ARWR"];
+                        m.WriteMemory(Damage, "float", AssaultRifleData.Damage); ;
+                        m.WriteMemory(Spread, "float", AssaultRifleData.Spread);
+                        m.WriteMemory(Penetration, "float", AssaultRifleData.Penetration);
+                        m.WriteMemory(Velocity, "float", AssaultRifleData.Velocity);
+                        m.WriteMemory(Range, "float", AssaultRifleData.Range);
+                        data.Remove("ARBase");
+                        data.Remove("ARWD");
+                        data.Remove("ARWS");
+                        data.Remove("ARWP");
+                        data.Remove("ARWV");
+                        data.Remove("ARWR");
                         bAssaultRifle = false;
                     }
                     if (bSpecialCarbine)
                     {
-                        m.WriteMemory(gData.WEAPON_DAMAGE, "float", SpecialCarbineData.Damage);
-                        m.WriteMemory(gData.WEAPON_SPREAD, "float", SpecialCarbineData.Spread);
-                        m.WriteMemory(gData.WEAPON_BPENETRATION, "float", SpecialCarbineData.Penetration);
-                        m.WriteMemory(gData.WEAPON_MVELOCITY, "float", SpecialCarbineData.Velocity);
-                        m.WriteMemory(gData.WEAPON_RANGE, "float", SpecialCarbineData.Range);
+                        string Damage = data["SCWD"];
+                        string Spread = data["SCWS"];
+                        string Penetration = data["SCWP"];
+                        string Velocity = data["SCWV"];
+                        string Range = data["SCWR"];
+                        m.WriteMemory(Damage, "float", SpecialCarbineData.Damage);
+                        m.WriteMemory(Spread, "float", SpecialCarbineData.Spread);
+                        m.WriteMemory(Penetration, "float", SpecialCarbineData.Penetration);
+                        m.WriteMemory(Velocity, "float", SpecialCarbineData.Velocity);
+                        m.WriteMemory(Range, "float", SpecialCarbineData.Range);
+                        data.Remove("ARBase");
+                        data.Remove("ARWD");
+                        data.Remove("ARWS");
+                        data.Remove("ARWP");
+                        data.Remove("ARWV");
+                        data.Remove("ARWR");
                         bSpecialCarbine = false;
                     }
                     if (bBullpupRifle)
                     {
-                        m.WriteMemory(gData.WEAPON_DAMAGE, "float", BullpupRifleData.Damage);
-                        m.WriteMemory(gData.WEAPON_SPREAD, "float", BullpupRifleData.Spread);
-                        m.WriteMemory(gData.WEAPON_BPENETRATION, "float", BullpupRifleData.Penetration);
-                        m.WriteMemory(gData.WEAPON_MVELOCITY, "float", BullpupRifleData.Velocity);
-                        m.WriteMemory(gData.WEAPON_RANGE, "float", BullpupRifleData.Range);
+                        string Damage = data["BPRWD"];
+                        string Spread = data["BPRWS"];
+                        string Penetration = data["BPRWP"];
+                        string Velocity = data["BPRWV"];
+                        string Range = data["BPRWR"];
+                        m.WriteMemory(Damage, "float", BullpupRifleData.Damage);
+                        m.WriteMemory(Spread, "float", BullpupRifleData.Spread);
+                        m.WriteMemory(Penetration, "float", BullpupRifleData.Penetration);
+                        m.WriteMemory(Velocity, "float", BullpupRifleData.Velocity);
+                        m.WriteMemory(Range, "float", BullpupRifleData.Range);
+                        data.Remove("BPRBase");
+                        data.Remove("BPRWD");
+                        data.Remove("BPRWS");
+                        data.Remove("BPRWP");
+                        data.Remove("BPRWV");
+                        data.Remove("BPRWR");
                         bBullpupRifle = false;
                     }
                     if (bMilitaryRifle)
                     {
-                        m.WriteMemory(gData.WEAPON_DAMAGE, "float", MilitaryRifleData.Damage);
-                        m.WriteMemory(gData.WEAPON_SPREAD, "float", MilitaryRifleData.Spread);
-                        m.WriteMemory(gData.WEAPON_BPENETRATION, "float", MilitaryRifleData.Penetration);
-                        m.WriteMemory(gData.WEAPON_MVELOCITY, "float", MilitaryRifleData.Velocity);
-                        m.WriteMemory(gData.WEAPON_RANGE, "float", MilitaryRifleData.Range);
+                        string Damage = data["MiRWD"];
+                        string Spread = data["MiRWS"];
+                        string Penetration = data["MiRWP"];
+                        string Velocity = data["MiRWV"];
+                        string Range = data["MiRWR"];
+                        m.WriteMemory(Damage, "float", MilitaryRifleData.Damage);
+                        m.WriteMemory(Spread, "float", MilitaryRifleData.Spread);
+                        m.WriteMemory(Penetration, "float", MilitaryRifleData.Penetration);
+                        m.WriteMemory(Velocity, "float", MilitaryRifleData.Velocity);
+                        m.WriteMemory(Range, "float", MilitaryRifleData.Range);
+                        data.Remove("MiRBase");
+                        data.Remove("MiRWD");
+                        data.Remove("MiRWS");
+                        data.Remove("MiRWP");
+                        data.Remove("MiRWV");
+                        data.Remove("MiRWR");
                         bMilitaryRifle = false;
                     }
                     if (bMarksmanRifle)
                     {
-                        m.WriteMemory(gData.WEAPON_DAMAGE, "float", MarksmanRifleData.Damage);
-                        m.WriteMemory(gData.WEAPON_SPREAD, "float", MarksmanRifleData.Spread);
-                        m.WriteMemory(gData.WEAPON_BPENETRATION, "float", MarksmanRifleData.Penetration);
-                        m.WriteMemory(gData.WEAPON_MVELOCITY, "float", MarksmanRifleData.Velocity);
-                        m.WriteMemory(gData.WEAPON_RANGE, "float", MarksmanRifleData.Range);
+                        string Damage = data["MaRWD"];
+                        string Spread = data["MaRWS"];
+                        string Penetration = data["MaRWP"];
+                        string Velocity = data["MaRWV"];
+                        string Range = data["MaRWR"];
+                        m.WriteMemory(Damage, "float", MarksmanRifleData.Damage);
+                        m.WriteMemory(Spread, "float", MarksmanRifleData.Spread);
+                        m.WriteMemory(Penetration, "float", MarksmanRifleData.Penetration);
+                        m.WriteMemory(Velocity, "float", MarksmanRifleData.Velocity);
+                        m.WriteMemory(Range, "float", MarksmanRifleData.Range);
+                        data.Remove("MaRBase");
+                        data.Remove("MaRWD");
+                        data.Remove("MaRWS");
+                        data.Remove("MaRWP");
+                        data.Remove("MaRWV");
+                        data.Remove("MaRWR");
                         bMarksmanRifle = false;
                     }
                     if (bSniperRifle)
                     {
-                        m.WriteMemory(gData.WEAPON_DAMAGE, "float", SniperRifleData.Damage);
-                        m.WriteMemory(gData.WEAPON_SPREAD, "float", SniperRifleData.Spread);
-                        m.WriteMemory(gData.WEAPON_BPENETRATION, "float", SniperRifleData.Penetration);
-                        m.WriteMemory(gData.WEAPON_MVELOCITY, "float", SniperRifleData.Velocity);
-                        m.WriteMemory(gData.WEAPON_RANGE, "float", SniperRifleData.Range);
+                        string Damage = data["SnRWD"];
+                        string Spread = data["SnRWS"];
+                        string Penetration = data["SnRWP"];
+                        string Velocity = data["SnRWV"];
+                        string Range = data["SnRWR"];
+                        m.WriteMemory(Damage, "float", SniperRifleData.Damage);
+                        m.WriteMemory(Spread, "float", SniperRifleData.Spread);
+                        m.WriteMemory(Penetration, "float", SniperRifleData.Penetration);
+                        m.WriteMemory(Velocity, "float", SniperRifleData.Velocity);
+                        m.WriteMemory(Range, "float", SniperRifleData.Range);
+                        data.Remove("SnRBase");
+                        data.Remove("SnRWD");
+                        data.Remove("SnRWS");
+                        data.Remove("SnRWP");
+                        data.Remove("SnRWV");
+                        data.Remove("SnRWR");
                         bSniperRifle = false;
                     }
                     if (bHeavyShotgun)
                     {
-                        m.WriteMemory(gData.WEAPON_DAMAGE, "float", HeavyShotgunData.Damage);
-                        m.WriteMemory(gData.WEAPON_SPREAD, "float", HeavyShotgunData.Spread);
-                        m.WriteMemory(gData.WEAPON_BPENETRATION, "float", HeavyShotgunData.Penetration);
-                        m.WriteMemory(gData.WEAPON_MVELOCITY, "float", HeavyShotgunData.Velocity);
-                        m.WriteMemory(gData.WEAPON_RANGE, "float", HeavyShotgunData.Range);
+                        string Damage = data["HSGWD"];
+                        string Spread = data["HSGWS"];
+                        string Penetration = data["HSGWP"];
+                        string Velocity = data["HSGWV"];
+                        string Range = data["HSGWR"];
+                        m.WriteMemory(Damage, "float", HeavyShotgunData.Damage);
+                        m.WriteMemory(Spread, "float", HeavyShotgunData.Spread);
+                        m.WriteMemory(Penetration, "float", HeavyShotgunData.Penetration);
+                        m.WriteMemory(Velocity, "float", HeavyShotgunData.Velocity);
+                        m.WriteMemory(Range, "float", HeavyShotgunData.Range);
+                        data.Remove("HSGBase");
+                        data.Remove("HSGWD");
+                        data.Remove("HSGWS");
+                        data.Remove("HSGWP");
+                        data.Remove("HSGWV");
+                        data.Remove("HSGWR");
                         bHeavyShotgun = false;
                     }
                     #endregion
@@ -502,101 +729,222 @@ namespace Simple_GTAV_External_Trainer
             {
                 if (bPistol)
                 {
-                    m.WriteMemory(gData.WEAPON_DAMAGE, "float", PistolData.Damage);
-                    m.WriteMemory(gData.WEAPON_SPREAD, "float", PistolData.Spread);
-                    m.WriteMemory(gData.WEAPON_BPENETRATION, "float", PistolData.Penetration);
-                    m.WriteMemory(gData.WEAPON_MVELOCITY, "float", PistolData.Velocity);
-                    m.WriteMemory(gData.WEAPON_RANGE, "float", PistolData.Range);
+                    string Damage = data["PistolWD"];
+                    string Spread = data["PistolWS"];
+                    string Penetration = data["PistolWP"];
+                    string Velocity = data["PistolWV"];
+                    string Range = data["PistolWR"];
+                    m.WriteMemory(Damage, "float", PistolData.Damage);
+                    m.WriteMemory(Spread, "float", PistolData.Spread);
+                    m.WriteMemory(Penetration, "float", PistolData.Penetration);
+                    m.WriteMemory(Velocity, "float", PistolData.Velocity);
+                    m.WriteMemory(Range, "float", PistolData.Range);
+                    data.Remove("PistolBase");
+                    data.Remove("PistolWD");
+                    data.Remove("PistolWS");
+                    data.Remove("PistolWP");
+                    data.Remove("PistolWV");
+                    data.Remove("PistolWR");
                     bPistol = false;
                 }
                 if (bCombatPistol)
                 {
-                    m.WriteMemory(gData.WEAPON_DAMAGE, "float", CombatPistolData.Damage);
-                    m.WriteMemory(gData.WEAPON_SPREAD, "float", CombatPistolData.Spread);
-                    m.WriteMemory(gData.WEAPON_BPENETRATION, "float", CombatPistolData.Penetration);
-                    m.WriteMemory(gData.WEAPON_MVELOCITY, "float", CombatPistolData.Velocity);
-                    m.WriteMemory(gData.WEAPON_RANGE, "float", CombatPistolData.Range);
+                    string Damage = data["CPistolWD"];
+                    string Spread = data["CPistolWS"];
+                    string Penetration = data["CPistolWP"];
+                    string Velocity = data["CPistolWV"];
+                    string Range = data["CPistolWR"];
+                    m.WriteMemory(Damage, "float", CombatPistolData.Damage);
+                    m.WriteMemory(Spread, "float", CombatPistolData.Spread);
+                    m.WriteMemory(Penetration, "float", CombatPistolData.Penetration);
+                    m.WriteMemory(Velocity, "float", CombatPistolData.Velocity);
+                    m.WriteMemory(Range, "float", CombatPistolData.Range);
+                    data.Remove("CPistolBase");
+                    data.Remove("CPistolWD");
+                    data.Remove("CPistolWS");
+                    data.Remove("CPistolWP");
+                    data.Remove("CPistolWV");
+                    data.Remove("CPistolWR");
                     bCombatPistol = false;
                 }
                 if (bMicroSMG)
                 {
-                    m.WriteMemory(gData.WEAPON_DAMAGE, "float", MicroSMGData.Damage);
-                    m.WriteMemory(gData.WEAPON_SPREAD, "float", MicroSMGData.Spread);
-                    m.WriteMemory(gData.WEAPON_BPENETRATION, "float", MicroSMGData.Penetration);
-                    m.WriteMemory(gData.WEAPON_MVELOCITY, "float", MicroSMGData.Velocity);
-                    m.WriteMemory(gData.WEAPON_RANGE, "float", MicroSMGData.Range);
+                    string Damage = data["MSMGWD"];
+                    string Spread = data["MSMGWS"];
+                    string Penetration = data["MSMGWP"];
+                    string Velocity = data["MSMGWV"];
+                    string Range = data["MSMGWR"];
+                    m.WriteMemory(Damage, "float", MicroSMGData.Damage);
+                    m.WriteMemory(Spread, "float", MicroSMGData.Spread);
+                    m.WriteMemory(Penetration, "float", MicroSMGData.Penetration);
+                    m.WriteMemory(Velocity, "float", MicroSMGData.Velocity);
+                    m.WriteMemory(Range, "float", MicroSMGData.Range);
+                    data.Remove("MSMGBase");
+                    data.Remove("MSMGWD");
+                    data.Remove("MSMGWS");
+                    data.Remove("MSMGWP");
+                    data.Remove("MSMGWV");
+                    data.Remove("MSMGWR");
                     bMicroSMG = false;
                 }
                 if (bSMG)
                 {
-                    m.WriteMemory(gData.WEAPON_DAMAGE, "float", SMGData.Damage);
-                    m.WriteMemory(gData.WEAPON_SPREAD, "float", SMGData.Spread);
-                    m.WriteMemory(gData.WEAPON_BPENETRATION, "float", SMGData.Penetration);
-                    m.WriteMemory(gData.WEAPON_MVELOCITY, "float", SMGData.Velocity);
-                    m.WriteMemory(gData.WEAPON_RANGE, "float", SMGData.Range);
+                    string Damage = data["SMGWD"];
+                    string Spread = data["SMGWS"];
+                    string Penetration = data["SMGWP"];
+                    string Velocity = data["SMGWV"];
+                    string Range = data["SMGWR"];
+                    m.WriteMemory(Damage, "float", SMGData.Damage);
+                    m.WriteMemory(Spread, "float", SMGData.Spread);
+                    m.WriteMemory(Penetration, "float", SMGData.Penetration);
+                    m.WriteMemory(Velocity, "float", SMGData.Velocity);
+                    m.WriteMemory(Range, "float", SMGData.Range);
+                    data.Remove("SMGBase");
+                    data.Remove("SMGWD");
+                    data.Remove("SMGWS");
+                    data.Remove("SMGWP");
+                    data.Remove("SMGWV");
+                    data.Remove("SMGWR");
                     bSMG = false;
                 }
                 if (bAssaultRifle)
                 {
-                    m.WriteMemory(gData.WEAPON_DAMAGE, "float", AssaultRifleData.Damage); ;
-                    m.WriteMemory(gData.WEAPON_SPREAD, "float", AssaultRifleData.Spread);
-                    m.WriteMemory(gData.WEAPON_BPENETRATION, "float", AssaultRifleData.Penetration);
-                    m.WriteMemory(gData.WEAPON_MVELOCITY, "float", AssaultRifleData.Velocity);
-                    m.WriteMemory(gData.WEAPON_RANGE, "float", AssaultRifleData.Range);
+                    string Damage = data["ARWD"];
+                    string Spread = data["ARWS"];
+                    string Penetration = data["ARWP"];
+                    string Velocity = data["ARWV"];
+                    string Range = data["ARWR"];
+                    m.WriteMemory(Damage, "float", AssaultRifleData.Damage); ;
+                    m.WriteMemory(Spread, "float", AssaultRifleData.Spread);
+                    m.WriteMemory(Penetration, "float", AssaultRifleData.Penetration);
+                    m.WriteMemory(Velocity, "float", AssaultRifleData.Velocity);
+                    m.WriteMemory(Range, "float", AssaultRifleData.Range);
+                    data.Remove("ARBase");
+                    data.Remove("ARWD");
+                    data.Remove("ARWS");
+                    data.Remove("ARWP");
+                    data.Remove("ARWV");
+                    data.Remove("ARWR");
                     bAssaultRifle = false;
                 }
                 if (bSpecialCarbine)
                 {
-                    m.WriteMemory(gData.WEAPON_DAMAGE, "float", SpecialCarbineData.Damage);
-                    m.WriteMemory(gData.WEAPON_SPREAD, "float", SpecialCarbineData.Spread);
-                    m.WriteMemory(gData.WEAPON_BPENETRATION, "float", SpecialCarbineData.Penetration);
-                    m.WriteMemory(gData.WEAPON_MVELOCITY, "float", SpecialCarbineData.Velocity);
-                    m.WriteMemory(gData.WEAPON_RANGE, "float", SpecialCarbineData.Range);
+                    string Damage = data["SCWD"];
+                    string Spread = data["SCWS"];
+                    string Penetration = data["SCWP"];
+                    string Velocity = data["SCWV"];
+                    string Range = data["SCWR"];
+                    m.WriteMemory(Damage, "float", SpecialCarbineData.Damage);
+                    m.WriteMemory(Spread, "float", SpecialCarbineData.Spread);
+                    m.WriteMemory(Penetration, "float", SpecialCarbineData.Penetration);
+                    m.WriteMemory(Velocity, "float", SpecialCarbineData.Velocity);
+                    m.WriteMemory(Range, "float", SpecialCarbineData.Range);
+                    data.Remove("ARBase");
+                    data.Remove("ARWD");
+                    data.Remove("ARWS");
+                    data.Remove("ARWP");
+                    data.Remove("ARWV");
+                    data.Remove("ARWR");
                     bSpecialCarbine = false;
                 }
                 if (bBullpupRifle)
                 {
-                    m.WriteMemory(gData.WEAPON_DAMAGE, "float", BullpupRifleData.Damage);
-                    m.WriteMemory(gData.WEAPON_SPREAD, "float", BullpupRifleData.Spread);
-                    m.WriteMemory(gData.WEAPON_BPENETRATION, "float", BullpupRifleData.Penetration);
-                    m.WriteMemory(gData.WEAPON_MVELOCITY, "float", BullpupRifleData.Velocity);
-                    m.WriteMemory(gData.WEAPON_RANGE, "float", BullpupRifleData.Range);
+                    string Damage = data["BPRWD"];
+                    string Spread = data["BPRWS"];
+                    string Penetration = data["BPRWP"];
+                    string Velocity = data["BPRWV"];
+                    string Range = data["BPRWR"];
+                    m.WriteMemory(Damage, "float", BullpupRifleData.Damage);
+                    m.WriteMemory(Spread, "float", BullpupRifleData.Spread);
+                    m.WriteMemory(Penetration, "float", BullpupRifleData.Penetration);
+                    m.WriteMemory(Velocity, "float", BullpupRifleData.Velocity);
+                    m.WriteMemory(Range, "float", BullpupRifleData.Range);
+                    data.Remove("BPRBase");
+                    data.Remove("BPRWD");
+                    data.Remove("BPRWS");
+                    data.Remove("BPRWP");
+                    data.Remove("BPRWV");
+                    data.Remove("BPRWR");
                     bBullpupRifle = false;
                 }
                 if (bMilitaryRifle)
                 {
-                    m.WriteMemory(gData.WEAPON_DAMAGE, "float", MilitaryRifleData.Damage);
-                    m.WriteMemory(gData.WEAPON_SPREAD, "float", MilitaryRifleData.Spread);
-                    m.WriteMemory(gData.WEAPON_BPENETRATION, "float", MilitaryRifleData.Penetration);
-                    m.WriteMemory(gData.WEAPON_MVELOCITY, "float", MilitaryRifleData.Velocity);
-                    m.WriteMemory(gData.WEAPON_RANGE, "float", MilitaryRifleData.Range);
+                    string Damage = data["MiRWD"];
+                    string Spread = data["MiRWS"];
+                    string Penetration = data["MiRWP"];
+                    string Velocity = data["MiRWV"];
+                    string Range = data["MiRWR"];
+                    m.WriteMemory(Damage, "float", MilitaryRifleData.Damage);
+                    m.WriteMemory(Spread, "float", MilitaryRifleData.Spread);
+                    m.WriteMemory(Penetration, "float", MilitaryRifleData.Penetration);
+                    m.WriteMemory(Velocity, "float", MilitaryRifleData.Velocity);
+                    m.WriteMemory(Range, "float", MilitaryRifleData.Range);
+                    data.Remove("MiRBase");
+                    data.Remove("MiRWD");
+                    data.Remove("MiRWS");
+                    data.Remove("MiRWP");
+                    data.Remove("MiRWV");
+                    data.Remove("MiRWR");
                     bMilitaryRifle = false;
                 }
                 if (bMarksmanRifle)
                 {
-                    m.WriteMemory(gData.WEAPON_DAMAGE, "float", MarksmanRifleData.Damage);
-                    m.WriteMemory(gData.WEAPON_SPREAD, "float", MarksmanRifleData.Spread);
-                    m.WriteMemory(gData.WEAPON_BPENETRATION, "float", MarksmanRifleData.Penetration);
-                    m.WriteMemory(gData.WEAPON_MVELOCITY, "float", MarksmanRifleData.Velocity);
-                    m.WriteMemory(gData.WEAPON_RANGE, "float", MarksmanRifleData.Range);
+                    string Damage = data["MaRWD"];
+                    string Spread = data["MaRWS"];
+                    string Penetration = data["MaRWP"];
+                    string Velocity = data["MaRWV"];
+                    string Range = data["MaRWR"];
+                    m.WriteMemory(Damage, "float", MarksmanRifleData.Damage);
+                    m.WriteMemory(Spread, "float", MarksmanRifleData.Spread);
+                    m.WriteMemory(Penetration, "float", MarksmanRifleData.Penetration);
+                    m.WriteMemory(Velocity, "float", MarksmanRifleData.Velocity);
+                    m.WriteMemory(Range, "float", MarksmanRifleData.Range);
+                    data.Remove("MaRBase");
+                    data.Remove("MaRWD");
+                    data.Remove("MaRWS");
+                    data.Remove("MaRWP");
+                    data.Remove("MaRWV");
+                    data.Remove("MaRWR");
                     bMarksmanRifle = false;
                 }
                 if (bSniperRifle)
                 {
-                    m.WriteMemory(gData.WEAPON_DAMAGE, "float", SniperRifleData.Damage);
-                    m.WriteMemory(gData.WEAPON_SPREAD, "float", SniperRifleData.Spread);
-                    m.WriteMemory(gData.WEAPON_BPENETRATION, "float", SniperRifleData.Penetration);
-                    m.WriteMemory(gData.WEAPON_MVELOCITY, "float", SniperRifleData.Velocity);
-                    m.WriteMemory(gData.WEAPON_RANGE, "float", SniperRifleData.Range);
+                    string Damage = data["SnRWD"];
+                    string Spread = data["SnRWS"];
+                    string Penetration = data["SnRWP"];
+                    string Velocity = data["SnRWV"];
+                    string Range = data["SnRWR"];
+                    m.WriteMemory(Damage, "float", SniperRifleData.Damage);
+                    m.WriteMemory(Spread, "float", SniperRifleData.Spread);
+                    m.WriteMemory(Penetration, "float", SniperRifleData.Penetration);
+                    m.WriteMemory(Velocity, "float", SniperRifleData.Velocity);
+                    m.WriteMemory(Range, "float", SniperRifleData.Range);
+                    data.Remove("SnRBase");
+                    data.Remove("SnRWD");
+                    data.Remove("SnRWS");
+                    data.Remove("SnRWP");
+                    data.Remove("SnRWV");
+                    data.Remove("SnRWR");
                     bSniperRifle = false;
                 }
                 if (bHeavyShotgun)
                 {
-                    m.WriteMemory(gData.WEAPON_DAMAGE, "float", HeavyShotgunData.Damage);
-                    m.WriteMemory(gData.WEAPON_SPREAD, "float", HeavyShotgunData.Spread);
-                    m.WriteMemory(gData.WEAPON_BPENETRATION, "float", HeavyShotgunData.Penetration);
-                    m.WriteMemory(gData.WEAPON_MVELOCITY, "float", HeavyShotgunData.Velocity);
-                    m.WriteMemory(gData.WEAPON_RANGE, "float", HeavyShotgunData.Range);
+                    string Damage = data["HSGWD"];
+                    string Spread = data["HSGWS"];
+                    string Penetration = data["HSGWP"];
+                    string Velocity = data["HSGWV"];
+                    string Range = data["HSGWR"];
+                    m.WriteMemory(Damage, "float", HeavyShotgunData.Damage);
+                    m.WriteMemory(Spread, "float", HeavyShotgunData.Spread);
+                    m.WriteMemory(Penetration, "float", HeavyShotgunData.Penetration);
+                    m.WriteMemory(Velocity, "float", HeavyShotgunData.Velocity);
+                    m.WriteMemory(Range, "float", HeavyShotgunData.Range);
+                    data.Remove("HSGBase");
+                    data.Remove("HSGWD");
+                    data.Remove("HSGWS");
+                    data.Remove("HSGWP");
+                    data.Remove("HSGWV");
+                    data.Remove("HSGWR");
                     bHeavyShotgun = false;
                 }
                 bPerfectWeapon = false;
@@ -623,101 +971,222 @@ namespace Simple_GTAV_External_Trainer
             #region WEAPON DATA
             if (bPistol)
             {
-                m.WriteMemory(gData.WEAPON_DAMAGE, "float", PistolData.Damage);
-                m.WriteMemory(gData.WEAPON_SPREAD, "float", PistolData.Spread);
-                m.WriteMemory(gData.WEAPON_BPENETRATION, "float", PistolData.Penetration);
-                m.WriteMemory(gData.WEAPON_MVELOCITY, "float", PistolData.Velocity);
-                m.WriteMemory(gData.WEAPON_RANGE, "float", PistolData.Range);
+                string Damage = data["PistolWD"];
+                string Spread = data["PistolWS"];
+                string Penetration = data["PistolWP"];
+                string Velocity = data["PistolWV"];
+                string Range = data["PistolWR"];
+                m.WriteMemory(Damage, "float", PistolData.Damage);
+                m.WriteMemory(Spread, "float", PistolData.Spread);
+                m.WriteMemory(Penetration, "float", PistolData.Penetration);
+                m.WriteMemory(Velocity, "float", PistolData.Velocity);
+                m.WriteMemory(Range, "float", PistolData.Range);
+                data.Remove("PistolBase");
+                data.Remove("PistolWD");
+                data.Remove("PistolWS");
+                data.Remove("PistolWP");
+                data.Remove("PistolWV");
+                data.Remove("PistolWR");
                 bPistol = false;
             }
             if (bCombatPistol)
             {
-                m.WriteMemory(gData.WEAPON_DAMAGE, "float", CombatPistolData.Damage);
-                m.WriteMemory(gData.WEAPON_SPREAD, "float", CombatPistolData.Spread);
-                m.WriteMemory(gData.WEAPON_BPENETRATION, "float", CombatPistolData.Penetration);
-                m.WriteMemory(gData.WEAPON_MVELOCITY, "float", CombatPistolData.Velocity);
-                m.WriteMemory(gData.WEAPON_RANGE, "float", CombatPistolData.Range);
+                string Damage = data["CPistolWD"];
+                string Spread = data["CPistolWS"];
+                string Penetration = data["CPistolWP"];
+                string Velocity = data["CPistolWV"];
+                string Range = data["CPistolWR"];
+                m.WriteMemory(Damage, "float", CombatPistolData.Damage);
+                m.WriteMemory(Spread, "float", CombatPistolData.Spread);
+                m.WriteMemory(Penetration, "float", CombatPistolData.Penetration);
+                m.WriteMemory(Velocity, "float", CombatPistolData.Velocity);
+                m.WriteMemory(Range, "float", CombatPistolData.Range);
+                data.Remove("CPistolBase");
+                data.Remove("CPistolWD");
+                data.Remove("CPistolWS");
+                data.Remove("CPistolWP");
+                data.Remove("CPistolWV");
+                data.Remove("CPistolWR");
                 bCombatPistol = false;
             }
             if (bMicroSMG)
             {
-                m.WriteMemory(gData.WEAPON_DAMAGE, "float", MicroSMGData.Damage);
-                m.WriteMemory(gData.WEAPON_SPREAD, "float", MicroSMGData.Spread);
-                m.WriteMemory(gData.WEAPON_BPENETRATION, "float", MicroSMGData.Penetration);
-                m.WriteMemory(gData.WEAPON_MVELOCITY, "float", MicroSMGData.Velocity);
-                m.WriteMemory(gData.WEAPON_RANGE, "float", MicroSMGData.Range);
+                string Damage = data["MSMGWD"];
+                string Spread = data["MSMGWS"];
+                string Penetration = data["MSMGWP"];
+                string Velocity = data["MSMGWV"];
+                string Range = data["MSMGWR"];
+                m.WriteMemory(Damage, "float", MicroSMGData.Damage);
+                m.WriteMemory(Spread, "float", MicroSMGData.Spread);
+                m.WriteMemory(Penetration, "float", MicroSMGData.Penetration);
+                m.WriteMemory(Velocity, "float", MicroSMGData.Velocity);
+                m.WriteMemory(Range, "float", MicroSMGData.Range);
+                data.Remove("MSMGBase");
+                data.Remove("MSMGWD");
+                data.Remove("MSMGWS");
+                data.Remove("MSMGWP");
+                data.Remove("MSMGWV");
+                data.Remove("MSMGWR");
                 bMicroSMG = false;
             }
             if (bSMG)
             {
-                m.WriteMemory(gData.WEAPON_DAMAGE, "float", SMGData.Damage);
-                m.WriteMemory(gData.WEAPON_SPREAD, "float", SMGData.Spread);
-                m.WriteMemory(gData.WEAPON_BPENETRATION, "float", SMGData.Penetration);
-                m.WriteMemory(gData.WEAPON_MVELOCITY, "float", SMGData.Velocity);
-                m.WriteMemory(gData.WEAPON_RANGE, "float", SMGData.Range);
+                string Damage = data["SMGWD"];
+                string Spread = data["SMGWS"];
+                string Penetration = data["SMGWP"];
+                string Velocity = data["SMGWV"];
+                string Range = data["SMGWR"];
+                m.WriteMemory(Damage, "float", SMGData.Damage);
+                m.WriteMemory(Spread, "float", SMGData.Spread);
+                m.WriteMemory(Penetration, "float", SMGData.Penetration);
+                m.WriteMemory(Velocity, "float", SMGData.Velocity);
+                m.WriteMemory(Range, "float", SMGData.Range);
+                data.Remove("SMGBase");
+                data.Remove("SMGWD");
+                data.Remove("SMGWS");
+                data.Remove("SMGWP");
+                data.Remove("SMGWV");
+                data.Remove("SMGWR");
                 bSMG = false;
             }
             if (bAssaultRifle)
             {
-                m.WriteMemory(gData.WEAPON_DAMAGE, "float", AssaultRifleData.Damage); ;
-                m.WriteMemory(gData.WEAPON_SPREAD, "float", AssaultRifleData.Spread);
-                m.WriteMemory(gData.WEAPON_BPENETRATION, "float", AssaultRifleData.Penetration);
-                m.WriteMemory(gData.WEAPON_MVELOCITY, "float", AssaultRifleData.Velocity);
-                m.WriteMemory(gData.WEAPON_RANGE, "float", AssaultRifleData.Range);
+                string Damage = data["ARWD"];
+                string Spread = data["ARWS"];
+                string Penetration = data["ARWP"];
+                string Velocity = data["ARWV"];
+                string Range = data["ARWR"];
+                m.WriteMemory(Damage, "float", AssaultRifleData.Damage); ;
+                m.WriteMemory(Spread, "float", AssaultRifleData.Spread);
+                m.WriteMemory(Penetration, "float", AssaultRifleData.Penetration);
+                m.WriteMemory(Velocity, "float", AssaultRifleData.Velocity);
+                m.WriteMemory(Range, "float", AssaultRifleData.Range);
+                data.Remove("ARBase");
+                data.Remove("ARWD");
+                data.Remove("ARWS");
+                data.Remove("ARWP");
+                data.Remove("ARWV");
+                data.Remove("ARWR");
                 bAssaultRifle = false;
             }
             if (bSpecialCarbine)
             {
-                m.WriteMemory(gData.WEAPON_DAMAGE, "float", SpecialCarbineData.Damage);
-                m.WriteMemory(gData.WEAPON_SPREAD, "float", SpecialCarbineData.Spread);
-                m.WriteMemory(gData.WEAPON_BPENETRATION, "float", SpecialCarbineData.Penetration);
-                m.WriteMemory(gData.WEAPON_MVELOCITY, "float", SpecialCarbineData.Velocity);
-                m.WriteMemory(gData.WEAPON_RANGE, "float", SpecialCarbineData.Range);
+                string Damage = data["SCWD"];
+                string Spread = data["SCWS"];
+                string Penetration = data["SCWP"];
+                string Velocity = data["SCWV"];
+                string Range = data["SCWR"];
+                m.WriteMemory(Damage, "float", SpecialCarbineData.Damage);
+                m.WriteMemory(Spread, "float", SpecialCarbineData.Spread);
+                m.WriteMemory(Penetration, "float", SpecialCarbineData.Penetration);
+                m.WriteMemory(Velocity, "float", SpecialCarbineData.Velocity);
+                m.WriteMemory(Range, "float", SpecialCarbineData.Range);
+                data.Remove("ARBase");
+                data.Remove("ARWD");
+                data.Remove("ARWS");
+                data.Remove("ARWP");
+                data.Remove("ARWV");
+                data.Remove("ARWR");
                 bSpecialCarbine = false;
             }
             if (bBullpupRifle)
             {
-                m.WriteMemory(gData.WEAPON_DAMAGE, "float", BullpupRifleData.Damage);
-                m.WriteMemory(gData.WEAPON_SPREAD, "float", BullpupRifleData.Spread);
-                m.WriteMemory(gData.WEAPON_BPENETRATION, "float", BullpupRifleData.Penetration);
-                m.WriteMemory(gData.WEAPON_MVELOCITY, "float", BullpupRifleData.Velocity);
-                m.WriteMemory(gData.WEAPON_RANGE, "float", BullpupRifleData.Range);
+                string Damage = data["BPRWD"];
+                string Spread = data["BPRWS"];
+                string Penetration = data["BPRWP"];
+                string Velocity = data["BPRWV"];
+                string Range = data["BPRWR"];
+                m.WriteMemory(Damage, "float", BullpupRifleData.Damage);
+                m.WriteMemory(Spread, "float", BullpupRifleData.Spread);
+                m.WriteMemory(Penetration, "float", BullpupRifleData.Penetration);
+                m.WriteMemory(Velocity, "float", BullpupRifleData.Velocity);
+                m.WriteMemory(Range, "float", BullpupRifleData.Range);
+                data.Remove("BPRBase");
+                data.Remove("BPRWD");
+                data.Remove("BPRWS");
+                data.Remove("BPRWP");
+                data.Remove("BPRWV");
+                data.Remove("BPRWR");
                 bBullpupRifle = false;
             }
             if (bMilitaryRifle)
             {
-                m.WriteMemory(gData.WEAPON_DAMAGE, "float", MilitaryRifleData.Damage);
-                m.WriteMemory(gData.WEAPON_SPREAD, "float", MilitaryRifleData.Spread);
-                m.WriteMemory(gData.WEAPON_BPENETRATION, "float", MilitaryRifleData.Penetration);
-                m.WriteMemory(gData.WEAPON_MVELOCITY, "float", MilitaryRifleData.Velocity);
-                m.WriteMemory(gData.WEAPON_RANGE, "float", MilitaryRifleData.Range);
+                string Damage = data["MiRWD"];
+                string Spread = data["MiRWS"];
+                string Penetration = data["MiRWP"];
+                string Velocity = data["MiRWV"];
+                string Range = data["MiRWR"];
+                m.WriteMemory(Damage, "float", MilitaryRifleData.Damage);
+                m.WriteMemory(Spread, "float", MilitaryRifleData.Spread);
+                m.WriteMemory(Penetration, "float", MilitaryRifleData.Penetration);
+                m.WriteMemory(Velocity, "float", MilitaryRifleData.Velocity);
+                m.WriteMemory(Range, "float", MilitaryRifleData.Range);
+                data.Remove("MiRBase");
+                data.Remove("MiRWD");
+                data.Remove("MiRWS");
+                data.Remove("MiRWP");
+                data.Remove("MiRWV");
+                data.Remove("MiRWR");
                 bMilitaryRifle = false;
             }
             if (bMarksmanRifle)
             {
-                m.WriteMemory(gData.WEAPON_DAMAGE, "float", MarksmanRifleData.Damage);
-                m.WriteMemory(gData.WEAPON_SPREAD, "float", MarksmanRifleData.Spread);
-                m.WriteMemory(gData.WEAPON_BPENETRATION, "float", MarksmanRifleData.Penetration);
-                m.WriteMemory(gData.WEAPON_MVELOCITY, "float", MarksmanRifleData.Velocity);
-                m.WriteMemory(gData.WEAPON_RANGE, "float", MarksmanRifleData.Range);
+                string Damage = data["MaRWD"];
+                string Spread = data["MaRWS"];
+                string Penetration = data["MaRWP"];
+                string Velocity = data["MaRWV"];
+                string Range = data["MaRWR"];
+                m.WriteMemory(Damage, "float", MarksmanRifleData.Damage);
+                m.WriteMemory(Spread, "float", MarksmanRifleData.Spread);
+                m.WriteMemory(Penetration, "float", MarksmanRifleData.Penetration);
+                m.WriteMemory(Velocity, "float", MarksmanRifleData.Velocity);
+                m.WriteMemory(Range, "float", MarksmanRifleData.Range);
+                data.Remove("MaRBase");
+                data.Remove("MaRWD");
+                data.Remove("MaRWS");
+                data.Remove("MaRWP");
+                data.Remove("MaRWV");
+                data.Remove("MaRWR");
                 bMarksmanRifle = false;
             }
             if (bSniperRifle)
             {
-                m.WriteMemory(gData.WEAPON_DAMAGE, "float", SniperRifleData.Damage);
-                m.WriteMemory(gData.WEAPON_SPREAD, "float", SniperRifleData.Spread);
-                m.WriteMemory(gData.WEAPON_BPENETRATION, "float", SniperRifleData.Penetration);
-                m.WriteMemory(gData.WEAPON_MVELOCITY, "float", SniperRifleData.Velocity);
-                m.WriteMemory(gData.WEAPON_RANGE, "float", SniperRifleData.Range);
+                string Damage = data["SnRWD"];
+                string Spread = data["SnRWS"];
+                string Penetration = data["SnRWP"];
+                string Velocity = data["SnRWV"];
+                string Range = data["SnRWR"];
+                m.WriteMemory(Damage, "float", SniperRifleData.Damage);
+                m.WriteMemory(Spread, "float", SniperRifleData.Spread);
+                m.WriteMemory(Penetration, "float", SniperRifleData.Penetration);
+                m.WriteMemory(Velocity, "float", SniperRifleData.Velocity);
+                m.WriteMemory(Range, "float", SniperRifleData.Range);
+                data.Remove("SnRBase");
+                data.Remove("SnRWD");
+                data.Remove("SnRWS");
+                data.Remove("SnRWP");
+                data.Remove("SnRWV");
+                data.Remove("SnRWR");
                 bSniperRifle = false;
             }
             if (bHeavyShotgun)
             {
-                m.WriteMemory(gData.WEAPON_DAMAGE, "float", HeavyShotgunData.Damage);
-                m.WriteMemory(gData.WEAPON_SPREAD, "float", HeavyShotgunData.Spread);
-                m.WriteMemory(gData.WEAPON_BPENETRATION, "float", HeavyShotgunData.Penetration);
-                m.WriteMemory(gData.WEAPON_MVELOCITY, "float", HeavyShotgunData.Velocity);
-                m.WriteMemory(gData.WEAPON_RANGE, "float", HeavyShotgunData.Range);
+                string Damage = data["HSGWD"];
+                string Spread = data["HSGWS"];
+                string Penetration = data["HSGWP"];
+                string Velocity = data["HSGWV"];
+                string Range = data["HSGWR"];
+                m.WriteMemory(Damage, "float", HeavyShotgunData.Damage);
+                m.WriteMemory(Spread, "float", HeavyShotgunData.Spread);
+                m.WriteMemory(Penetration, "float", HeavyShotgunData.Penetration);
+                m.WriteMemory(Velocity, "float", HeavyShotgunData.Velocity);
+                m.WriteMemory(Range, "float", HeavyShotgunData.Range);
+                data.Remove("HSGBase");
+                data.Remove("HSGWD");
+                data.Remove("HSGWS");
+                data.Remove("HSGWP");
+                data.Remove("HSGWV");
+                data.Remove("HSGWR");
                 bHeavyShotgun = false;
             }
             #endregion
