@@ -47,6 +47,8 @@ namespace Simple_GTAV_External_Trainer
         private bool bNeverWanted = false;
         private bool bAllOff = false;
         private bool bControllerMode = false;
+        private bool bInfiniteAmmo = false;
+        private bool bRPBoost = false;
 
         [DllImport("user32.dll")]
         static extern short GetAsyncKeyState(System.Windows.Forms.Keys vKey);
@@ -59,6 +61,9 @@ namespace Simple_GTAV_External_Trainer
         int flag = 0;
 
         #region METHODS
+
+        #region FUNCTION KEYS
+
         void shoot(int delay)
         {
             mouse_event(leftDown, 0, 0, 0, 0);
@@ -79,20 +84,20 @@ namespace Simple_GTAV_External_Trainer
                     var ENTITY = m.ReadInt("GTA5.exe+1FB2375");
                     if (flag >= 1 && bAutoShoot)
                     {
-                        if (ISZOOMED == 1 && ENTITY == 1)
+                        if (ISZOOMED == 1 && ENTITY != 0)
                         {
                             shoot(7);
                             shoot(1);
                         }
                         //Patch for First Person
-                        if (ENTITY == 1)
+                        if (ENTITY != 0)
                         {
                             shoot(7);
                             shoot(1);
                         }
                     }
                     //Patch for Scoped Weapons
-                    else if (ENTITY == 1 && bAutoShoot)
+                    else if (ENTITY != 0 && bAutoShoot)
                     {
                         shoot(7);
                         shoot(1);
@@ -108,20 +113,20 @@ namespace Simple_GTAV_External_Trainer
                     var ENTITY = m.ReadInt("GTA5.exe+1FB2375");
                     if (flag >= 1 && bAutoShoot)
                     {
-                        if (ISZOOMED == 1 && ENTITY == 1)
+                        if (ISZOOMED == 1 && ENTITY != 0)
                         {
                             shoot(7);
                             shoot(1);
                         }
                         //Patch for First Person
-                        if (ENTITY == 1)
+                        if (ENTITY != 0)
                         {
                             shoot(7);
                             shoot(1);
                         }
                     }
                     //Patch for Scoped Weapons
-                    else if ((ISZOOMED == 1 && ENTITY == 1) && (bAutoShoot))
+                    else if ((ISZOOMED == 1 && ENTITY != 0) && (bAutoShoot))
                     {
                         shoot(7);
                         shoot(1);
@@ -155,6 +160,46 @@ namespace Simple_GTAV_External_Trainer
             }
         }
 
+        #endregion
+
+        #region NUMPAD
+        private void INFINITEAMMO()
+        {
+            var ADDRESS = "GTA5.exe+25333D8,0x8,0x10D0,0x78";
+            var FLAG = m.ReadByte(ADDRESS);
+            if (bInfiniteAmmo)
+            {
+                m.FreezeValue(ADDRESS, "byte", "2");
+            }
+            else if (FLAG == 2 && !bInfiniteAmmo)
+            {
+                m.UnfreezeValue(ADDRESS);
+                m.WriteMemory(ADDRESS, "byte", "0");
+            }
+        }
+
+        private void WANTEDHACK()
+        {
+            while (true)
+            {
+                if (bRPBoost)
+                {
+                    RPBOOSTER();
+                }
+            }
+        }
+
+        private void RPBOOSTER()
+        {
+            var WANTEDADDRESS = "GTA5.exe+25333D8,0x8,0x10c8,0x888";
+            m.WriteMemory(WANTEDADDRESS, "byte", "5");
+            Thread.Sleep(500);
+            m.WriteMemory(WANTEDADDRESS, "byte", "0");
+            Thread.Sleep(500);
+        }
+        #endregion
+
+        #region CLEAN UP
         private void ALLOFF()
         {
             if (bAutoShoot && bAllOff)
@@ -178,25 +223,48 @@ namespace Simple_GTAV_External_Trainer
             {
                 bNeverWanted = false;
             }
+            if (bInfiniteAmmo && bAllOff)
+            {
+                var ADDRESS = "GTA5.exe+25333D8,0x8,0x10D0,0x78";
+                var FLAG = m.ReadByte(ADDRESS);
+                if (FLAG == 2)
+                {
+                    m.UnfreezeValue(ADDRESS);
+                    m.WriteMemory(ADDRESS, "byte", "0");
+                }
+                bInfiniteAmmo = false;
+            }
             bAllOff = false;
         }
 
         private void EJECT()
         {
+            bAllOff = true;
             ALLOFF();
 
             //Just in case , do a final sweep
             var GODMODE = "GTA5.exe+25333D8,0x8,0x189";
-            var FLAG = m.ReadByte(GODMODE);
-            if (FLAG == 1)
+            var INFINITEAMMO = "GTA5.exe+25333D8,0x8,0x10D0,0x78";
+            var FLAG2 = m.ReadByte(INFINITEAMMO);
+            var FLAG1 = m.ReadByte(GODMODE);
+            if (FLAG1 == 1)
             {
                 m.WriteMemory(GODMODE, "byte", "0");
+            }
+            if (FLAG2 == 2)
+            {
+                m.UnfreezeValue(INFINITEAMMO);
+                m.WriteMemory(INFINITEAMMO, "byte", "0");
             }
             bAutoShoot = false;
             bGodMode = false;
             bNeverWanted = false;
             bControllerMode = false;
+            bInfiniteAmmo = false;
+            bRPBoost = false;
         }
+        #endregion
+
         #endregion
 
         #endregion
@@ -212,6 +280,8 @@ namespace Simple_GTAV_External_Trainer
             keyMgr.AddKey(Keys.F7);         // Never Wanted
             keyMgr.AddKey(Keys.F8);         // CONTROLLER MODE
             keyMgr.AddKey(Keys.F9);         // ALL OFF
+            keyMgr.AddKey(Keys.NumPad1);    // INFINITE AMMO
+            keyMgr.AddKey(Keys.NumPad2);    // RPBooster
             keyMgr.KeyDownEvent += new KeysMgr.KeyHandler(KeyDownEvent);
         }
 
@@ -240,6 +310,12 @@ namespace Simple_GTAV_External_Trainer
                 case Keys.F9:
                     this.bAllOff = !this.bAllOff;
                     break;
+                case Keys.NumPad1:
+                    this.bInfiniteAmmo = !this.bInfiniteAmmo;
+                    break;
+                case Keys.NumPad2:
+                    this.bRPBoost = !this.bRPBoost;
+                    break;
             }
         }
         #endregion
@@ -259,6 +335,8 @@ namespace Simple_GTAV_External_Trainer
                 m.OpenProcess(PID);
                 Thread TB = new Thread(triggerbot) { IsBackground = true };
                 TB.Start();
+                Thread WANTEDXPHACK = new Thread(WANTEDHACK) { IsBackground = true };
+                WANTEDXPHACK.Start();
             }
             this.BackColor = Color.Orange;
             this.TransparencyKey = Color.Orange;
@@ -315,6 +393,7 @@ namespace Simple_GTAV_External_Trainer
             }
             GODMODE();
             NEVERWANTED();
+            INFINITEAMMO();
             ALLOFF();
         }
         
@@ -344,6 +423,7 @@ namespace Simple_GTAV_External_Trainer
             Font HeaderFont = new Font("Arial", 16);
             Font InfoTextFont = new Font("Arial", 10);
 
+            ///DEBUG
             //Menu Position 1 || TOP LEFT
             PointF HeaderTextPos = new PointF(0.0F, 25.0F);
             PointF MenuOption1Pos = new PointF(2.0F, 50.0F);
@@ -355,15 +435,20 @@ namespace Simple_GTAV_External_Trainer
             Rectangle InfoBox = new Rectangle(3, 26, 155, 140);
 
             //Menu Position 2 || BOTTOM RIGHT
-            Rectangle TestBox = new Rectangle(1750, 921, 150, 140);
-            PointF HeaderTextPosTest = new PointF(1747.0F, 920.0F);
-            PointF MenuOption1PosTest = new PointF(1749.0f, 945.0F);
-            PointF MenuOption2PosTest = new PointF(1749.0f, 960.0F);
-            PointF MenuOption3PosTest = new PointF(1749.0f, 975.0F);
-            PointF MenuOption4PosTest = new PointF(1749.0f, 990.0F);
-            PointF MenuOption5PosTest = new PointF(1749.0f, 1015.0F);
-            PointF MenuOption6PosTest = new PointF(1749.0f, 1030.0F);
-            PointF MenuOption7PosTest = new PointF(1749.0f, 1045.0F);
+            Rectangle TestBox = new Rectangle(1750, 881, 150, 180);     //BOX POSITIION
+
+            PointF HeaderTextPosTest = new PointF(1747.0F, 880.0F);     //NIGHTFYRETV
+
+            PointF MenuOption1PosTest = new PointF(1749.0f, 905.0F);    //TRIGGERBOT
+            PointF MenuOption2PosTest = new PointF(1749.0f, 920.0F);    //GODMODE
+            PointF MenuOption3PosTest = new PointF(1749.0f, 935.0F);    //NEVERWANTED
+            PointF MenuOption4PosTest = new PointF(1749.0f, 950.0F);    //CONTROLLER
+            PointF MenuOption8PosTest = new PointF(1749.0f, 975.0f);    //INFINITE AMMO
+            PointF MenuOption9PosTest = new PointF(1749.0f, 990.0f);   //RP BOOSTER
+
+            PointF MenuOption5PosTest = new PointF(1749.0f, 1015.0F);   //ALL OFF
+            PointF MenuOption6PosTest = new PointF(1749.0f, 1030.0F);   //SHOW HIDE
+            PointF MenuOption7PosTest = new PointF(1749.0f, 1045.0F);   //QUIT MENU
 
             //g.FillRectangle(blackFill, InfoBox);
             g.FillRectangle(blackFill, TestBox);
@@ -400,6 +485,22 @@ namespace Simple_GTAV_External_Trainer
             else
             {
                 g.DrawString("[F8] CONTROLLER", InfoTextFont, GreenBrush, MenuOption4PosTest);
+            }
+            if (!bInfiniteAmmo)
+            {
+                g.DrawString("[1] INF AMMO", InfoTextFont, whiteBrush, MenuOption8PosTest);
+            }
+            else
+            {
+                g.DrawString("[1] INF AMMO", InfoTextFont, GreenBrush, MenuOption8PosTest);
+            }
+            if (!bRPBoost)
+            {
+                g.DrawString("[2] RP BOOSTER", InfoTextFont, whiteBrush, MenuOption9PosTest);
+            }
+            else
+            {
+                g.DrawString("[2] RP BOOSTER", InfoTextFont, GreenBrush, MenuOption9PosTest);
             }
             g.DrawString("ALL OFF [F9]", InfoTextFont, redBrush, MenuOption5PosTest);
             g.DrawString("SHOW / HIDE [INSERT]", InfoTextFont, redBrush, MenuOption6PosTest);
