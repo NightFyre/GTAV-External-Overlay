@@ -1,7 +1,5 @@
 # GTAV-External-Overlay
 For Educational Purposes Only
-
-# GTA5-External-Overlay
 ![image](https://user-images.githubusercontent.com/80198020/128248745-d81fcf6e-2db5-462d-8f31-fd08124680fd.png)
 
 Beginner Tutorial (BASIC TUT)
