@@ -79,6 +79,7 @@
     <Compile Include="Helpers\Key.cs" />
     <Compile Include="Helpers\KeysMgr.cs" />
     <Compile Include="Helpers\Manager.cs" />
+    <Compile Include="Helpers\WeaponStats.cs" />
     <Compile Include="Overlay.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -114,6 +115,5 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
