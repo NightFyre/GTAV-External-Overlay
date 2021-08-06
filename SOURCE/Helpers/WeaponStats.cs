@@ -51,11 +51,11 @@ namespace Simple_GTAV_External_Trainer
         {
             Func<Helpers.Weapon.Stats, bool> isCurentWeapon = IsCurentWeaponBuildFunc(weaponDamage, weaponSpread, weaponMvelocity, weaponRange);
 
-            return !(isCurentWeapon(Helpers.Weapon.Stats.HandsData) &&
-                     isCurentWeapon(Helpers.Weapon.Stats.GrenadeData) &&
-                     isCurentWeapon(Helpers.Weapon.Stats.StickyBombData) &&
-                     isCurentWeapon(Helpers.Weapon.Stats.RPGData) &&
-                     isCurentWeapon(Helpers.Weapon.Stats.GrenadeLauncherData) &&
+            return !(isCurentWeapon(Helpers.Weapon.Stats.HandsData) ||
+                     isCurentWeapon(Helpers.Weapon.Stats.GrenadeData) ||
+                     isCurentWeapon(Helpers.Weapon.Stats.StickyBombData) ||
+                     isCurentWeapon(Helpers.Weapon.Stats.RPGData) ||
+                     isCurentWeapon(Helpers.Weapon.Stats.GrenadeLauncherData) ||
                      isCurentWeapon(Helpers.Weapon.Stats.HomingLauncherData));
         }
 
