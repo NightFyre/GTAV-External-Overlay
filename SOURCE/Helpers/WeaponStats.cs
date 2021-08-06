@@ -71,62 +71,119 @@ namespace Simple_GTAV_External_Trainer
             }
             weaponsSave.Clear();
         }
+      
+        public void WEAPONHACK()
+        {
+            while (true)
+            {
+                if (bPerfectWeapon)
+                {
+                    //Store unique gun addresses so that we can disable the patch later
+                    long baseAddr = _m.ReadLong("GTA5.exe+25333D8,0x8,0x10D8,0x20");
 
-        //public void WEAPONHACK()
-        //{
-        //    while (true)
-        //    {
-        //        if (bPerfectWeapon)
-        //        {
-        //            //Store unique gun addresses so that we can disable the patch later
-        //            long baseAddr = _m.ReadLong("GTA5.exe+25333D8,0x8,0x10D8,0x20");
+                    if (!weaponsSave.ContainsKey(baseAddr))
+                    {
+                        float weaponDamage = _m.ReadFloat(gData.WEAPON_DAMAGE);
+                        float weaponSpread = _m.ReadFloat(gData.WEAPON_SPREAD);
+                        float weaponPenetration = _m.ReadFloat(gData.WEAPON_BPENETRATION);
+                        float weaponVelocity = _m.ReadFloat(gData.WEAPON_MVELOCITY);
+                        float weaponRange = _m.ReadFloat(gData.WEAPON_RANGE);
+                        float weaponRecoil = _m.ReadFloat(gData.WEAPON_RECOIL);
 
-        //            if (!weaponsSave.ContainsKey(baseAddr))
-        //            {
-        //                float weaponDamage = _m.ReadFloat(gData.WEAPON_DAMAGE);
-        //                float weaponSpread = _m.ReadFloat(gData.WEAPON_SPREAD);
-        //                float weaponPenetration = _m.ReadFloat(gData.WEAPON_BPENETRATION);
-        //                float weaponVelocity = _m.ReadFloat(gData.WEAPON_MVELOCITY);
-        //                float weaponRange = _m.ReadFloat(gData.WEAPON_RANGE);
-        //                float weaponRecoil = _m.ReadFloat(gData.WEAPON_RECOIL);
+                        #region ENABLE
 
-        //                #region ENABLE
+                        if (DoCurentWeaponShootBullet(weaponDamage, weaponSpread, weaponVelocity, weaponRange))
+                        {
+                            #region EDIT_BULLET_GUN
 
-        //                if (DoCurentWeaponShootBullet(weaponDamage, weaponSpread, weaponVelocity, weaponRange))
-        //                {
-        //                    #region EDIT_BULLET_GUN
+                            //TODO: When other weapon type is implement move the SAVE_DEFAULT_STATS out of the if
+                            #region SAVE_DEFAULT_STATS
 
-        //                    //TODO: When other weapon type is implement move the SAVE_DEFAULT_STATS out of the if
-        //                    #region SAVE_DEFAULT_STATS
+                            weaponsSave.Add(baseAddr, new WeaponDefaultValue(weaponDamage.ToString(), weaponSpread.ToString(),
+                                weaponPenetration.ToString(), weaponVelocity.ToString(), weaponRange.ToString(), weaponRecoil.ToString()));
 
-        //                    weaponsSave.Add(baseAddr, new WeaponDefaultValue(weaponDamage.ToString(), weaponSpread.ToString(),
-        //                        weaponPenetration.ToString(), weaponVelocity.ToString(), weaponRange.ToString(), weaponRecoil.ToString()));
+                            #endregion
 
-        //                    #endregion
+                            _m.WriteMemory(gData.WEAPON_DAMAGE, "float", gData.pDamage);
+                            _m.WriteMemory(gData.WEAPON_SPREAD, "float", gData.pSpread);
+                            _m.WriteMemory(gData.WEAPON_BPENETRATION, "float", gData.pPenetration);
+                            _m.WriteMemory(gData.WEAPON_MVELOCITY, "float", gData.pVelocity);
+                            _m.WriteMemory(gData.WEAPON_RANGE, "float", gData.pRange);
+                            _m.WriteMemory(gData.WEAPON_RECOIL, "float", gData.pRecoil);
+                            
+                            #endregion
+                        }
+                        
+                        #endregion
+                    }
+                }
+                else
+                {
+                    #region DISABLE
 
-        //                    _m.WriteMemory(gData.WEAPON_DAMAGE, "float", gData.pDamage);
-        //                    _m.WriteMemory(gData.WEAPON_SPREAD, "float", gData.pSpread);
-        //                    _m.WriteMemory(gData.WEAPON_BPENETRATION, "float", gData.pPenetration);
-        //                    _m.WriteMemory(gData.WEAPON_MVELOCITY, "float", gData.pVelocity);
-        //                    _m.WriteMemory(gData.WEAPON_RANGE, "float", gData.pRange);
-        //                    _m.WriteMemory(gData.WEAPON_RECOIL, "float", gData.pRecoil);
+                    ResetStats();
 
-        //                    #endregion
-        //                }
+                    #endregion
+                }
+                Thread.Sleep(100);
+            }
+        }
+      
+        public void WEAPONHACK()
+        {
+            while (true)
+            {
+                if (bPerfectWeapon)
+                {
+                    //Store unique gun addresses so that we can disable the patch later
+                    long baseAddr = _m.ReadLong("GTA5.exe+25333D8,0x8,0x10D8,0x20");
 
-        //                #endregion
-        //            }
-        //        }
-        //        else
-        //        {
-        //            #region DISABLE
+                    if (!weaponsSave.ContainsKey(baseAddr))
+                    {
+                        float weaponDamage = _m.ReadFloat(gData.WEAPON_DAMAGE);
+                        float weaponSpread = _m.ReadFloat(gData.WEAPON_SPREAD);
+                        float weaponPenetration = _m.ReadFloat(gData.WEAPON_BPENETRATION);
+                        float weaponVelocity = _m.ReadFloat(gData.WEAPON_MVELOCITY);
+                        float weaponRange = _m.ReadFloat(gData.WEAPON_RANGE);
+                        float weaponRecoil = _m.ReadFloat(gData.WEAPON_RECOIL);
 
-        //            ResetStats();
+                        #region ENABLE
 
-        //            #endregion
-        //        }
-        //        Thread.Sleep(100);
-        //    }
-        //}
+                        if (DoCurentWeaponShootBullet(weaponDamage, weaponSpread, weaponVelocity, weaponRange))
+                        {
+                            #region EDIT_BULLET_GUN
+
+                            //TODO: When other weapon type is implement move the SAVE_DEFAULT_STATS out of the if
+                            #region SAVE_DEFAULT_STATS
+
+                            weaponsSave.Add(baseAddr, new WeaponDefaultValue(weaponDamage.ToString(), weaponSpread.ToString(),
+                                weaponPenetration.ToString(), weaponVelocity.ToString(), weaponRange.ToString(), weaponRecoil.ToString()));
+
+                            #endregion
+
+                            _m.WriteMemory(gData.WEAPON_DAMAGE, "float", gData.pDamage);
+                            _m.WriteMemory(gData.WEAPON_SPREAD, "float", gData.pSpread);
+                            _m.WriteMemory(gData.WEAPON_BPENETRATION, "float", gData.pPenetration);
+                            _m.WriteMemory(gData.WEAPON_MVELOCITY, "float", gData.pVelocity);
+                            _m.WriteMemory(gData.WEAPON_RANGE, "float", gData.pRange);
+                            _m.WriteMemory(gData.WEAPON_RECOIL, "float", gData.pRecoil);
+
+                            #endregion
+                        }
+
+                        #endregion
+                    }
+                }
+                else
+                {
+                    #region DISABLE
+
+                    ResetStats();
+
+                    #endregion
+                }
+                Thread.Sleep(100);
+            }
+        }
     }
 }
