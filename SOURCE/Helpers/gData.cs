@@ -1,4 +1,4 @@
-﻿namespace Simple_GTAV_External_Trainer.Helpers
+namespace Simple_GTAV_External_Trainer.Helpers
 {
     class gData
     {
@@ -60,8 +60,8 @@
         public const string VehDamageMultiplier = "GTA5.exe+25333D8,0x8,0xD30,0x938,0xF0";
         public const string VehCollisionMultiplier = "GTA5.exe+25333D8,0x8,0xD30,0x938,0xF8";
     }
-
-    /// <summary>
+    
+     /// <summary>
     /// WEAPON DATA
     /// </summary>
     /// 
@@ -319,4 +319,107 @@
         public const string Velocity = "2000";
         public const string Range = "120";
     }
+    
+    
+    /// <summary>
+    /// WEAPON DATA EDIT "RasqueP"
+    /// </summary>
+    /// Not yet implemented
+
+    #region WEAPON
+
+    namespace Weapon
+    {
+        public class Stats
+        {
+            public readonly float ImpactType;
+            public readonly float ImpactExplosion;
+            public readonly float Damage;
+            public readonly float Spread;
+            public readonly float Penetration;
+            public readonly float ReloadSpeed;
+            public readonly float Velocity;
+            public readonly float Recoil;
+
+            public readonly float Range;
+            // public readonly float Recoil;
+
+            private Stats(float damage, float spread, float penetration, float velocity, float range)
+            {
+                // ImpactType = impact;
+                // ImpactExplosion = explosion;
+                Damage = damage;
+                Spread = spread;
+                Penetration = penetration;
+                // ReloadSpeed = reloadspeed;
+                Velocity = velocity;
+                Range = range;
+                // Recoil = recoil;
+            }
+
+            #region HANDS
+
+            public static readonly Stats HandsData = new Stats(0, 2, 0, 2000, 30);
+
+            #endregion
+
+            #region PISTOLS
+
+            public static readonly Stats PistolData = new Stats(26, 2, 0.009999999776f, 2000, 120);
+            public static readonly Stats CombatPistolData = new Stats(27, 2, 0.009999999776f, 2000, 120);
+            public static readonly Stats HeavyRevolverData = new Stats(26, 2, 0.009999999776f, 2000, 120);
+            public static readonly Stats ApPistolData = new Stats(25, 2, 0.009999999776f, 2000, 120);
+            public static readonly Stats FlaraGunData = new Stats(10, 2, 0.009999999776f, 2000, 120);
+            public static readonly Stats AtomizerData = new Stats(10, 2, 0.009999999776f, 2000, 120);
+
+            #endregion
+
+            #region SMG's
+
+            public static readonly Stats MicroSMGData = new Stats(21, 2, 0.009999999776f, 2000, 120);
+            public static readonly Stats SMGData = new Stats(22, 2, 0.009999999776f, 2000, 120);
+
+            #endregion
+
+            #region Assault Rifles
+
+            public static readonly Stats AssaultRifleData = new Stats(30, 2, 0.1000000015f, 2000, 120);
+            public static readonly Stats SpecialCarbineData = new Stats(32, 2, 0.1000000015f, 2000, 120);
+            public static readonly Stats BullpupRifleData = new Stats(32, 2, 0.1000000015f, 2000, 120);
+            public static readonly Stats MilitaryRifleData = new Stats(37.5f, 2, 0.1000000015f, 2000, 120);
+
+            #endregion
+
+            #region SNIPER RIFLES
+
+            public static readonly Stats SniperRifleData = new Stats(101, 2, 1, 5000, 1500);
+            public static readonly Stats MarksmanRifleData = new Stats(65, 2, 1, 5000, 1000);
+            public static readonly Stats HeavySniperData = new Stats(230, 2, 1, 5000, 1500);
+
+            #endregion
+
+            #region SHOTGUNS
+
+            public static readonly Stats PumpShotgunData = new Stats(29, 2, 0.009999999776f, 2000, 40);
+            public static readonly Stats HeavyShotgunData = new Stats(117, 2, 0.009999999776f, 2000, 50);
+
+            #endregion
+
+            #region Explosives
+
+            public static readonly Stats GrenadeData = new Stats(117, 2, 0.009999999776f, 2000, 50);
+            public static readonly Stats StickyBombData = new Stats(117, 2, 0.009999999776f, 2000, 50);
+            public static readonly Stats RPGData = new Stats(117, 2, 0.009999999776f, 2000, 50);
+            public static readonly Stats GrenadeLauncherData = new Stats(0, 2, 0, 2000, 150);
+            public static readonly Stats HomingLauncherData = new Stats(0, 2, 0, 2000, 300);
+
+            #endregion
+
+            public static readonly Stats KarbineData = new Stats(33, 2, 0.009999999776f, 2000, 120);
+            public static readonly Stats MiniGunData = new Stats(30, 2, 0.009999999776f, 2000, 120);
+
+        }
+    }
+
+    #endregion
 }
