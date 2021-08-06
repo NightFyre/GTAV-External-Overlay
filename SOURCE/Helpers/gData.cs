@@ -125,7 +125,7 @@
 
             public static readonly Stats GrenadeData = new Stats(117, 2, 0.009999999776f, 2000, 50);
             public static readonly Stats StickyBombData = new Stats(117, 2, 0.009999999776f, 2000, 50);
-            public static readonly Stats RPGData = new Stats(117, 2, 0.009999999776f, 2000, 50);
+            public static readonly Stats RPGData = new Stats(0, 2, 0f, 2000, 85);
             public static readonly Stats GrenadeLauncherData = new Stats(0, 2, 0, 2000, 150);
             public static readonly Stats HomingLauncherData = new Stats(0, 2, 0, 2000, 300);
 
