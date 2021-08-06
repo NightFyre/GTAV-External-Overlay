@@ -13,3 +13,8 @@ Beginner Tutorial (BASIC TUT)
 - Start the Hack
 
 ![image](https://user-images.githubusercontent.com/80198020/127639458-4bae6cdc-9ba9-4e87-b745-3078e560d90a.png)
+
+# Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
