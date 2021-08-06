@@ -8,21 +8,6 @@ using Memory;
 using System;
 using System.Collections.Generic;
 
-///Created by NightFyreTV
-//Simple GTA V External Overlay
-//Version 1.5
-
-///FEATURES
-// TRIGGER BOT
-// GOD MODE
-// INFINITE AMMO
-// NEVER WANTED
-// PERFECT WEAPON
-// RP BOOSTER
-// TUNE CAR
-
-
-
 namespace Simple_GTAV_External_Trainer
 {
     public partial class Overlay : Form
@@ -67,10 +52,6 @@ namespace Simple_GTAV_External_Trainer
         private bool bControllerMode = false;
         private bool bInfiniteAmmo = false;
         private bool bRPBoost = false;
-
-        private bool bPerfectWeapon = false;
-        private bool bTuneCar = false;
-        private bool bCarModActive = false;
 
         ///Weapondata
         private Weapon weapon = new Weapon(m);
@@ -210,132 +191,6 @@ namespace Simple_GTAV_External_Trainer
             m.WriteMemory(gData.WANTED_LEVEL, "byte", "0");
             Thread.Sleep(500);
         }
-
-        private void SPEEDHACK()
-        {
-            bool IsDriving = false;
-            
-            //Vehicle Info
-            var pDriving = m.ReadInt(gData.VehicleState);
-            var VehicleID = m.ReadLong(gData.VehicleID);
-            var VehicleHealth = m.ReadFloat(gData.VehicleHealth); 
-            var EngineHealth = m.ReadFloat(gData.EngineHealth);
-            var VehicleGravity = m.ReadFloat(gData.VehicleGravity);
-
-            //Vehicle Handling Info
-            var VehicleAcceleration = m.ReadFloat(gData.VehicleAcceleration);
-            var BrakeForce = m.ReadFloat(gData.VehBrakeForce);
-            var HandbrakeForce = m.ReadFloat(gData.VehHandbrakeforce);
-            var DamageForceMultiplier = m.ReadFloat(gData.VehDamageMultiplier);
-            var CollisionForceMultiplier = m.ReadFloat(gData.VehCollisionMultiplier);
-
-            if (bTuneCar)
-            {
-                if (pDriving == 16)
-                {
-                    IsDriving = false;
-                }
-                if (pDriving == 0)
-                {
-                    IsDriving = true;
-                }
-
-                if (IsDriving)
-                {
-                    if ((!bCarModActive) && (VehicleGravity != 20))
-                    {
-                        data.Add("dVehicleID", VehicleID.ToString("X"));
-                        data.Add("VehicleAcceleration", VehicleAcceleration.ToString());
-                        data.Add("VehicleGravity", VehicleGravity.ToString());
-                        data.Add("BrakeForce", BrakeForce.ToString());
-                        data.Add("HandbrakeForce", HandbrakeForce.ToString());
-                        data.Add("DamageMultiplier", DamageForceMultiplier.ToString());
-                        data.Add("CollisionMultiplier", CollisionForceMultiplier.ToString());
-                        m.WriteMemory(gData.VehicleAcceleration, "float", "3.5");
-                        m.WriteMemory(gData.VehicleGravity, "float", "20");
-                        m.WriteMemory(gData.VehBrakeForce, "float", "5");
-                        m.WriteMemory(gData.VehHandbrakeforce, "float", "3");
-                        m.WriteMemory(gData.VehDamageMultiplier, "float", "0");
-                        m.WriteMemory(gData.VehCollisionMultiplier, "float", "0");
-                        bCarModActive = true;
-                    }
-                    if (VehicleHealth < 1000)
-                    {
-                        m.WriteMemory(gData.VehicleHealth, "float", "1000");
-                    }
-                    if (EngineHealth < 1000)
-                    {
-                        m.WriteMemory(gData.EngineHealth, "float", "1000");
-                    }
-                }
-                else
-                {
-                    if (bCarModActive)
-                    {
-                        string vAccelerationData = data["VehicleAcceleration"];
-                        string vGravityData = data["VehicleGravity"];
-                        string vBrakeForceData = data["BrakeForce"];
-                        string vHandbrakeForceData = data["HandbrakeForce"];
-                        string vDamageMultiplierData = data["DamageMultiplier"];
-                        string vCollisionMultiplierData = data["CollisionMultiplier"];
-                        float vAcceleration = float.Parse(vAccelerationData);
-                        float vGravity = float.Parse(vGravityData);
-                        float vBrakeForce = float.Parse(vBrakeForceData);
-                        float vHandbrakeForce = float.Parse(vHandbrakeForceData);
-                        float vDamage = float.Parse(vDamageMultiplierData);
-                        float vCollision = float.Parse(vCollisionMultiplierData);
-                        m.WriteMemory(gData.VehicleAcceleration, "float", vAcceleration.ToString());
-                        m.WriteMemory(gData.VehicleGravity, "float", vGravity.ToString());
-                        m.WriteMemory(gData.VehBrakeForce, "float", vBrakeForce.ToString());
-                        m.WriteMemory(gData.VehHandbrakeforce, "float", vHandbrakeForce.ToString());
-                        m.WriteMemory(gData.VehDamageMultiplier, "float", vDamage.ToString());
-                        m.WriteMemory(gData.VehCollisionMultiplier, "float", vCollision.ToString());
-                        data.Remove("dVehicleID");
-                        data.Remove("VehicleAcceleration");
-                        data.Remove("VehicleGravity");
-                        data.Remove("BrakeForce");
-                        data.Remove("HandbrakeForce");
-                        data.Remove("DamageMultiplier");
-                        data.Remove("CollisionMultiplier");
-                        bCarModActive = false;
-                        bTuneCar = false;
-                    }
-
-                }
-            }
-            else
-            {
-                if (bCarModActive)
-                {
-                    string vAccelerationData = data["VehicleAcceleration"];
-                    string vGravityData = data["VehicleGravity"];
-                    string vBrakeForceData = data["BrakeForce"];
-                    string vHandbrakeForceData = data["HandbrakeForce"];
-                    string vDamageMultiplierData = data["DamageMultiplier"];
-                    string vCollisionMultiplierData = data["CollisionMultiplier"];
-                    float vAcceleration = float.Parse(vAccelerationData);
-                    float vGravity = float.Parse(vGravityData);
-                    float vBrakeForce = float.Parse(vBrakeForceData);
-                    float vHandbrakeForce = float.Parse(vHandbrakeForceData);
-                    float vDamage = float.Parse(vDamageMultiplierData);
-                    float vCollision = float.Parse(vCollisionMultiplierData);
-                    m.WriteMemory(gData.VehicleAcceleration, "float", vAcceleration.ToString());
-                    m.WriteMemory(gData.VehicleGravity, "float", vGravity.ToString());
-                    m.WriteMemory(gData.VehBrakeForce, "float", vBrakeForce.ToString());
-                    m.WriteMemory(gData.VehHandbrakeforce, "float", vHandbrakeForce.ToString());
-                    m.WriteMemory(gData.VehDamageMultiplier, "float", vDamage.ToString());
-                    m.WriteMemory(gData.VehCollisionMultiplier, "float", vCollision.ToString());
-                    data.Remove("dVehicleID");
-                    data.Remove("VehicleAcceleration");
-                    data.Remove("VehicleGravity");
-                    data.Remove("BrakeForce");
-                    data.Remove("HandbrakeForce");
-                    data.Remove("DamageMultiplier");
-                    data.Remove("CollisionMultiplier");
-                    bCarModActive = false;
-                }
-            }
-        }
         #endregion
 
         #region CLEAN UP
@@ -382,39 +237,6 @@ namespace Simple_GTAV_External_Trainer
             }
             #endregion
 
-            #region TUNE CAR DISABLE
-            if (bCarModActive && bAllOff)
-            {
-                string vAccelerationData = data["VehicleAcceleration"];
-                string vGravityData = data["VehicleGravity"];
-                string vBrakeForceData = data["BrakeForce"];
-                string vHandbrakeForceData = data["HandbrakeForce"];
-                string vDamageMultiplierData = data["DamageMultiplier"];
-                string vCollisionMultiplierData = data["CollisionMultiplier"];
-                float vAcceleration = float.Parse(vAccelerationData);
-                float vGravity = float.Parse(vGravityData);
-                float vBrakeForce = float.Parse(vBrakeForceData);
-                float vHandbrakeForce = float.Parse(vHandbrakeForceData);
-                float vDamage = float.Parse(vDamageMultiplierData);
-                float vCollision = float.Parse(vCollisionMultiplierData);
-                m.WriteMemory(gData.VehicleAcceleration, "float", vAcceleration.ToString());
-                m.WriteMemory(gData.VehicleGravity, "float", vGravity.ToString());
-                m.WriteMemory(gData.VehBrakeForce, "float", vBrakeForce.ToString());
-                m.WriteMemory(gData.VehHandbrakeforce, "float", vHandbrakeForce.ToString());
-                m.WriteMemory(gData.VehDamageMultiplier, "float", vDamage.ToString());
-                m.WriteMemory(gData.VehCollisionMultiplier, "float", vCollision.ToString());
-                data.Remove("dVehicleID");
-                data.Remove("VehicleAcceleration");
-                data.Remove("VehicleGravity");
-                data.Remove("BrakeForce");
-                data.Remove("HandbrakeForce");
-                data.Remove("DamageMultiplier");
-                data.Remove("CollisionMultiplier");
-                bCarModActive = false;
-                bTuneCar = false;
-            }
-            #endregion
-
             bAllOff = false;
         }
 
@@ -438,39 +260,6 @@ namespace Simple_GTAV_External_Trainer
 
             weapon.ResetStats();
             
-            #endregion
-
-            #region TUNE CAR DISABLE
-            if (bCarModActive)
-            {
-                string vAccelerationData = data["VehicleAcceleration"];
-                string vGravityData = data["VehicleGravity"];
-                string vBrakeForceData = data["BrakeForce"];
-                string vHandbrakeForceData = data["HandbrakeForce"];
-                string vDamageMultiplierData = data["DamageMultiplier"];
-                string vCollisionMultiplierData = data["CollisionMultiplier"];
-                float vAcceleration = float.Parse(vAccelerationData);
-                float vGravity = float.Parse(vGravityData);
-                float vBrakeForce = float.Parse(vBrakeForceData);
-                float vHandbrakeForce = float.Parse(vHandbrakeForceData);
-                float vDamage = float.Parse(vDamageMultiplierData);
-                float vCollision = float.Parse(vCollisionMultiplierData);
-                m.WriteMemory(gData.VehicleAcceleration, "float", vAcceleration.ToString());
-                m.WriteMemory(gData.VehicleGravity, "float", vGravity.ToString());
-                m.WriteMemory(gData.VehBrakeForce, "float", vBrakeForce.ToString());
-                m.WriteMemory(gData.VehHandbrakeforce, "float", vHandbrakeForce.ToString());
-                m.WriteMemory(gData.VehDamageMultiplier, "float", vDamage.ToString());
-                m.WriteMemory(gData.VehCollisionMultiplier, "float", vCollision.ToString());
-                data.Remove("dVehicleID");
-                data.Remove("VehicleAcceleration");
-                data.Remove("VehicleGravity");
-                data.Remove("BrakeForce");
-                data.Remove("HandbrakeForce");
-                data.Remove("DamageMultiplier");
-                data.Remove("CollisionMultiplier");
-                bCarModActive = false;
-                bTuneCar = false;
-            }
             #endregion
 
             bAutoShoot = false;
@@ -501,7 +290,6 @@ namespace Simple_GTAV_External_Trainer
             keyMgr.AddKey(Keys.NumPad1);    // INFINITE AMMO
             keyMgr.AddKey(Keys.NumPad2);    // RPBooster
             keyMgr.AddKey(Keys.NumPad3);    // Perfect Weapon (SOCOM INSPIRED)
-            keyMgr.AddKey(Keys.NumPad4);    // Vehicle Speed Modifier
             keyMgr.KeyDownEvent += new KeysMgr.KeyHandler(KeyDownEvent);
         }
 
@@ -538,9 +326,6 @@ namespace Simple_GTAV_External_Trainer
                     break;
                 case Keys.NumPad3:
                     this.weapon.bPerfectWeapon = !this.weapon.bPerfectWeapon;
-                    break;
-                case Keys.NumPad4:
-                    this.bTuneCar = !this.bTuneCar;
                     break;
             }
         }
@@ -622,7 +407,6 @@ namespace Simple_GTAV_External_Trainer
             GODMODE();
             NEVERWANTED();
             INFINITEAMMO();
-            SPEEDHACK();
             ALLOFF();
         }
         
@@ -664,22 +448,21 @@ namespace Simple_GTAV_External_Trainer
             Rectangle InfoBox = new Rectangle(3, 26, 155, 140);
 
             //Menu Position 2 || BOTTOM RIGHT
-            Rectangle TestBox = new Rectangle(1750, 881, 150, 195);         //BOX POSITIION
+            Rectangle TestBox = new Rectangle(1750, 881, 150, 180);     //BOX POSITIION
 
-            PointF HeaderTextPosTest = new PointF(1747.0F, 880.0F);         //NIGHTFYRETV
+            PointF HeaderTextPosTest = new PointF(1747.0F, 880.0F);     //NIGHTFYRETV
 
-            PointF MenuOption1PosTest = new PointF(1749.0f, 905.0F);        //TRIGGERBOT
-            PointF MenuOption2PosTest = new PointF(1749.0f, 920.0F);        //GODMODE
-            PointF MenuOption3PosTest = new PointF(1749.0f, 935.0F);        //NEVERWANTED
-            PointF MenuOption4PosTest = new PointF(1749.0f, 950.0F);        //CONTROLLER
-            PointF MenuOption8PosTest = new PointF(1749.0f, 970.0f);        //INFINITE AMMO
-            PointF MenuOption9PosTest = new PointF(1749.0f, 985.0f);        //RP BOOSTER
-            PointF MenuOption10PosTest = new PointF(1749.0f, 1000.0f);      //Perfect Weapon
-            PointF MenuOption11PosTest = new PointF(1749.0f, 1015.0f);     //Fast Car
+            PointF MenuOption1PosTest = new PointF(1749.0f, 905.0F);    //TRIGGERBOT
+            PointF MenuOption2PosTest = new PointF(1749.0f, 920.0F);    //GODMODE
+            PointF MenuOption3PosTest = new PointF(1749.0f, 935.0F);    //NEVERWANTED
+            PointF MenuOption4PosTest = new PointF(1749.0f, 950.0F);    //CONTROLLER
+            PointF MenuOption8PosTest = new PointF(1749.0f, 970.0f);    //INFINITE AMMO
+            PointF MenuOption9PosTest = new PointF(1749.0f, 985.0f);    //RP BOOSTER
+            PointF MenuOption10PosTest = new PointF(1749.0f, 1000.0f);    //Perfect Weapon
 
-            PointF MenuOption5PosTest = new PointF(1749.0f, 1030.0F);   //ALL OFF
-            PointF MenuOption6PosTest = new PointF(1749.0f, 1045.0F);   //SHOW HIDE
-            PointF MenuOption7PosTest = new PointF(1749.0f, 1060.0F);   //QUIT MENU
+            PointF MenuOption5PosTest = new PointF(1749.0f, 1015.0F);   //ALL OFF
+            PointF MenuOption6PosTest = new PointF(1749.0f, 1030.0F);   //SHOW HIDE
+            PointF MenuOption7PosTest = new PointF(1749.0f, 1045.0F);   //QUIT MENU
 
             //g.FillRectangle(blackFill, InfoBox);
             g.FillRectangle(blackFill, TestBox);
@@ -740,14 +523,6 @@ namespace Simple_GTAV_External_Trainer
             else
             {
                 g.DrawString("[3] PERFECT WEAPON", InfoTextFont, GreenBrush, MenuOption10PosTest);
-            }
-            if (!bTuneCar)
-            {
-                g.DrawString("[4] TUNE CAR", InfoTextFont, whiteBrush, MenuOption11PosTest);
-            }
-            else
-            {
-                g.DrawString("[4] TUNE CAR", InfoTextFont, GreenBrush, MenuOption11PosTest);
             }
             g.DrawString("ALL OFF [F9]", InfoTextFont, redBrush, MenuOption5PosTest);
             g.DrawString("SHOW / HIDE [INSERT]", InfoTextFont, redBrush, MenuOption6PosTest);
