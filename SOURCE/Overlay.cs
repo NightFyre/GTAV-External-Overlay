@@ -160,7 +160,7 @@ namespace Simple_GTAV_External_Trainer
                         shoot(7);
                         shoot(1);
                     }
-                    
+
                 }
 
                 //Controller mode because why not
@@ -312,7 +312,7 @@ namespace Simple_GTAV_External_Trainer
             #region WEAPON DATA
 
             weapon.ResetStats();
-            
+
             #endregion
 
             bAutoShoot = false;
@@ -462,7 +462,7 @@ namespace Simple_GTAV_External_Trainer
             INFINITEAMMO();
             ALLOFF();
         }
-        
+
         private void WindowHookTimer_Tick(object sender, EventArgs e)
         {
             GetWindowRect(handle, out rect);

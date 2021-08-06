@@ -1,7 +1,28 @@
-﻿namespace Simple_GTAV_External_Trainer.Helpers
+namespace Simple_GTAV_External_Trainer.Helpers
 {
     class gData
     {
+        //POINTER AoB's
+        //WorldPTR = 48 8B 05 ? ? ? ? 45 ? ? ? ? 48 8B 48 08 48 85 C9 74 07
+        //BlipPTR = 4C 8D 05 ? ? ? ? 0F B7 C1
+        //ReplayInterfacePTR = 48 8D 0D ? ? ? ? 48 8B D7 E8? ? ? ? 48 8D 0D ? ? ? ? 8A D8 E8
+        //LocalScriptsPTR = 48 8B 05 ? ? ? ? 8B CF 48 8B 0C C8 39 59 68)
+        //GlobalPTR = 4C 8D 05 ? ? ? ? 4D 8B 08 4D 85 C9 74 11
+        //PlayerCountPTR = 48 8B 0D ? ? ? ? E8? ? ? ? 48 8B C8 E8? ? ? ? 48 8B CF
+        //PickupDataPTR = 48 8B 05 ? ? ? ? 48 8B 1C F8 8B
+        //SettingsPTR = 44 39 05 ? ? ? ? 75 0D
+
+        //Social Club Edition
+        //- WORLDPTR = GTA5.exe+252DCD8
+        //
+
+        //Epic Games Edition
+        // WORLDPTR = GTA5.exe+
+
+        //STEAM Edition
+        // WORLDPTR = GTA5.exe+25333D8
+
+
         //Triggerbot Info
         public const string ENEMY_IN_CROSSHAIRS = "GTA5.exe+1FB2380";
         public const string IS_ZOOMED = "GTA5.exe+1FB23A4";
