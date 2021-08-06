@@ -14,6 +14,16 @@ Beginner Tutorial (BASIC TUT)
 
 ![image](https://user-images.githubusercontent.com/80198020/127639458-4bae6cdc-9ba9-4e87-b745-3078e560d90a.png)
 
+# Bugs
+Currently Known Bugs
+
+Bug: 
+Description: 
+Possible Fix: 
+
+If you encounter any bugs, open an issue
+You may also send me suggestions
+
 # Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
