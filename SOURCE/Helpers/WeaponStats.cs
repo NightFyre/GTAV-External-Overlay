@@ -71,7 +71,7 @@ namespace Simple_GTAV_External_Trainer
             }
             weaponsSave.Clear();
         }
-
+      
         //public void WEAPONHACK()
         //{
         //    while (true)
