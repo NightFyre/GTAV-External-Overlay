@@ -1,7 +1,30 @@
-﻿namespace Simple_GTAV_External_Trainer.Helpers
+namespace Simple_GTAV_External_Trainer.Helpers
 {
     class gData
     {
+        //POINTER AoB's
+        //WorldPTR = 48 8B 05 ? ? ? ? 45 ? ? ? ? 48 8B 48 08 48 85 C9 74 07
+        //BlipPTR = 4C 8D 05 ? ? ? ? 0F B7 C1
+        //ReplayInterfacePTR = 48 8D 0D ? ? ? ? 48 8B D7 E8? ? ? ? 48 8D 0D ? ? ? ? 8A D8 E8
+        //LocalScriptsPTR = 48 8B 05 ? ? ? ? 8B CF 48 8B 0C C8 39 59 68)
+        //GlobalPTR = 4C 8D 05 ? ? ? ? 4D 8B 08 4D 85 C9 74 11
+        //PlayerCountPTR = 48 8B 0D ? ? ? ? E8? ? ? ? 48 8B C8 E8? ? ? ? 48 8B CF
+        //PickupDataPTR = 48 8B 05 ? ? ? ? 48 8B 1C F8 8B
+        //SettingsPTR = 44 39 05 ? ? ? ? 75 0D
+
+        //Social Club Edition
+        //- WORLDPTR = GTA5.exe+252DCD8
+        //
+
+        //Epic Games Edition
+        // WORLDPTR = GTA5.exe+
+
+        //STEAM Edition
+        // WORLDPTR = GTA5.exe+25333D8
+
+        //WEAPON HASH
+        public const string CWEAPON_HASH = "GTA5.exe+1CDDFEC";      //4byte INT
+
         //Triggerbot Info
         public const string ENEMY_IN_CROSSHAIRS = "GTA5.exe+1FB2380";
         public const string IS_ZOOMED = "GTA5.exe+1FB23A4";
@@ -44,6 +67,21 @@
         public const string pVelocity = "5000";
         public const string pRange = "1500";
         public const string pRecoil = "0";      //NEW
+
+        //Vehicle Data
+        public const string VehicleID = "GTA5.exe+25333D8,0x8,0xD30";
+        public const string VehicleState = "GTA5.exe+25333D8,0x8,0x1477";
+        public const string VehicleDirt = "GTA5.exe+25333D8,0x8,0xD30,0x9F8";
+        public const string VehicleHealth = "GTA5.exe+25333D8,0x8,0xD30,280";
+        public const string EngineHealth = "GTA5.exe+25333D8,0x8,0xD30,908";
+        public const string VehicleGravity = "GTA5.exe+25333D8,0x8,0xD30,C5C";
+
+        //Vehicle Handling Data
+        public const string VehicleAcceleration = "GTA5.exe+25333D8,0x8,0xD30,0x938,0x4C";
+        public const string VehBrakeForce = "GTA5.exe+25333D8,0x8,0xD30,0x938,0x6C";
+        public const string VehHandbrakeforce = "GTA5.exe+25333D8,0x8,0xD30,0x938,0x7C";
+        public const string VehDamageMultiplier = "GTA5.exe+25333D8,0x8,0xD30,0x938,0xF0";
+        public const string VehCollisionMultiplier = "GTA5.exe+25333D8,0x8,0xD30,0x938,0xF8";
     }
 
     /// <summary>
@@ -53,6 +91,18 @@
 
     namespace Weapon
     {
+        public class WeaponHash
+        {
+            int Hdagger = -1834847097;
+            int Hbat = -1786099057;
+            int Hbottle = -102323637;
+            int Hcrowbar = 2067956739;
+            int Hunarmed = -1569615261;
+            int Hflashlight = -1951375401;
+
+
+        }
+
         public class Stats
         {
             public readonly float Damage;

@@ -61,7 +61,8 @@ namespace Simple_GTAV_External_Trainer
 
         public void ResetStats()
         {
-            foreach (var weaponSave in weaponsSave) {
+            foreach (var weaponSave in weaponsSave)
+            {
                 _m.WriteMemory((weaponSave.Key + gData.Damage).ToString("X"), "float", weaponSave.Value.damage);
                 _m.WriteMemory((weaponSave.Key + gData.Spread).ToString("X"), "float", weaponSave.Value.spread);
                 _m.WriteMemory((weaponSave.Key + gData.Penetration).ToString("X"), "float", weaponSave.Value.penetration);
@@ -110,10 +111,10 @@ namespace Simple_GTAV_External_Trainer
                             _m.WriteMemory(gData.WEAPON_MVELOCITY, "float", gData.pVelocity);
                             _m.WriteMemory(gData.WEAPON_RANGE, "float", gData.pRange);
                             _m.WriteMemory(gData.WEAPON_RECOIL, "float", gData.pRecoil);
-                            
+
                             #endregion
                         }
-                        
+
                         #endregion
                     }
                 }
