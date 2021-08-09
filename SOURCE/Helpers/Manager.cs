@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using static Simple_GTAV_External_Trainer.Overlay;
 
 namespace GTAV_External_Trainer.Helpers
 {

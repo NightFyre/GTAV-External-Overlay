@@ -4,12 +4,16 @@ using System.Threading;
 using Memory;
 using Simple_GTAV_External_Trainer.Helpers;
 
+//Credit: RasqueP
+
 namespace Simple_GTAV_External_Trainer
 {
     public class Weapon
     {
+        //
         private readonly Mem _m;
 
+        //Create Struct
         private class WeaponDefaultValue
         {
             public string damage;
@@ -30,15 +34,19 @@ namespace Simple_GTAV_External_Trainer
             }
         }
 
+        //
         public bool bPerfectWeapon = false;
 
+        //Dictionary to store keys , method to deactivate 
         private Dictionary<long, WeaponDefaultValue> weaponsSave = new Dictionary<long, WeaponDefaultValue>();
 
+        //
         public Weapon(Mem m)
         {
             this._m = m;
         }
 
+        //
         private static Func<Helpers.Weapon.Stats, bool> IsCurentWeaponBuildFunc(float weaponDamage, float weaponSpread, float weaponMvelocity, float weaponRange)
         {
             return (weaponStats) => weaponDamage == weaponStats.Damage &&
@@ -47,6 +55,7 @@ namespace Simple_GTAV_External_Trainer
                                     weaponRange == weaponStats.Range;
         }
 
+        //Method to stop some weapons from changing values
         private bool DoCurentWeaponShootBullet(float weaponDamage, float weaponSpread, float weaponMvelocity, float weaponRange)
         {
             Func<Helpers.Weapon.Stats, bool> isCurentWeapon = IsCurentWeaponBuildFunc(weaponDamage, weaponSpread, weaponMvelocity, weaponRange);
@@ -59,6 +68,7 @@ namespace Simple_GTAV_External_Trainer
                      isCurentWeapon(Helpers.Weapon.Stats.HomingLauncherData));
         }
 
+        //Reset weapon values to default
         public void ResetStats()
         {
             foreach (var weaponSave in weaponsSave)
@@ -73,6 +83,8 @@ namespace Simple_GTAV_External_Trainer
             weaponsSave.Clear();
         }
 
+        //Weapon HAck
+        //This is where the magic happens
         public void WEAPONHACK()
         {
             while (true)
