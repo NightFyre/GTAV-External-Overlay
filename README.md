@@ -1,7 +1,35 @@
 # GTAV-External-Overlay
 For Educational Purposes Only
 
-![image](https://user-images.githubusercontent.com/80198020/128248745-d81fcf6e-2db5-462d-8f31-fd08124680fd.png)
+![image](https://user-images.githubusercontent.com/80198020/129115864-916d1340-1a25-433e-955a-dff4ec5911d2.png)
+
+# FEATURES
+- Triggerbot (Controller Support) *Social Club Support [check the github repository preview branch]
+- God Mode
+- Never Wanted
+- Infinite Ammo
+- RP & Crew Rank Booster (Go afk in a chill spot away from a lot of action)
+- Perfect Weapon (SOCOM Inspired)
+- Tune Car
+
+WEAPON ADJUSTMENTS (Bullet Weapons Only)
+- DAMAGE
+- SPREAD
+- PENETRATION
+- VELOCITY
+- RANGE
+
+TUNE CAR ADJUSTMENTS
+- Increased Acceleration & Speed
+- Increased Handling
+- Increased Braking
+- Vehicle Health Recovery
+- Removed Damage and Collision Force
+(panels will still break)
+
+# DEV PREVIEW BRANCH
+- Social Club / Epic Games Edition Test Build (Triggerbot is the only current feature)
+I need testers , I personally only know 2 people with the social club edition and don't personally have it. I will add more features as I get reliable testing completed.
 
 Beginner Tutorial (BASIC TUT)
 - Download and Run Visual Studio
