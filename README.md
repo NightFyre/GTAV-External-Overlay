@@ -25,8 +25,11 @@ If you encounter any bugs, open an issue
 You may also send me suggestions
 
 # Donations
-Donations are accepted and will be used to cover and expenses related to the development of this menu. Things like Internet Bill & Coffee
-CashApp: $danknights23
+Donations are accepted (will never be a requirement) and will be used to cover any expenses related to the development of this menu. Things like Internet Bill & Coffee
+
+Cashapp: $danknights23
+
+Keep in mind , donating will not grant you any special features! However you will have my gratitude and respect for supporting me :)
 
 # Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
