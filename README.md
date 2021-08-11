@@ -1,6 +1,5 @@
 # GTAV-External-Overlay
 For Educational Purposes Only
-![image](https://user-images.githubusercontent.com/80198020/127639458-4bae6cdc-9ba9-4e87-b745-3078e560d90a.png)
 ![image](https://user-images.githubusercontent.com/80198020/129115864-916d1340-1a25-433e-955a-dff4ec5911d2.png)
 
 # FEATURES
