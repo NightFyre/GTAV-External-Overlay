@@ -1,6 +1,6 @@
 # GTAV-External-Overlay
 For Educational Purposes Only
-
+![image](https://user-images.githubusercontent.com/80198020/127639458-4bae6cdc-9ba9-4e87-b745-3078e560d90a.png)
 ![image](https://user-images.githubusercontent.com/80198020/129115864-916d1340-1a25-433e-955a-dff4ec5911d2.png)
 
 # FEATURES
@@ -31,7 +31,7 @@ TUNE CAR ADJUSTMENTS
 - Social Club / Epic Games Edition Test Build (Triggerbot is the only current feature)
 I need testers , I personally only know 2 people with the social club edition and don't personally have it. I will add more features as I get reliable testing completed.
 
-Beginner Tutorial (BASIC TUT)
+# Beginner Tutorial (BASIC TUT)
 - Download and Run Visual Studio
 - Open the project Solution "Simple-GTAV-External-Trainer.sln"
 - Go to NuGet Packages and restore Memory.dll (x64)
@@ -39,8 +39,6 @@ Beginner Tutorial (BASIC TUT)
 - Build project to create executable
 - Start GTA V and Go Online
 - Start the Hack
-
-![image](https://user-images.githubusercontent.com/80198020/127639458-4bae6cdc-9ba9-4e87-b745-3078e560d90a.png)
 
 # Bugs
 Currently Known Bugs
