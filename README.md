@@ -25,10 +25,11 @@ TUNE CAR ADJUSTMENTS
 - Increased Braking
 - Vehicle Health Recovery
 - Removed Damage and Collision Force
-(panels will still break)
+(Glass, Panels and Tires will still break)
 
 # DEV PREVIEW BRANCH
 - Social Club / Epic Games Edition Test Build (Triggerbot is the only current feature)
+- 
 I need testers , I personally only know 2 people with the social club edition and don't personally have it. I will add more features as I get reliable testing completed.
 
 # Beginner Tutorial (BASIC TUT)
@@ -40,27 +41,12 @@ I need testers , I personally only know 2 people with the social club edition an
 - Start GTA V and Go Online
 - Start the Hack
 
-# Bugs
-Currently Known Bugs
-
-Bug: 
-Description: 
-Possible Fix: 
-
-If you encounter any bugs, open an issue
-You may also send me suggestions
-
 # Donations
 Donations are accepted (will never be a requirement) and will be used to cover any expenses related to the development of this menu. Things like Internet Bill & Coffee
 
 Cashapp: $danknights23
 
 Keep in mind , donating will not grant you any special features! However you will have my gratitude and respect for supporting me :)
-
-# Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-Please make sure to update tests as appropriate.
 
 # License
 
