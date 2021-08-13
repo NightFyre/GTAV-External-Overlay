@@ -3,7 +3,7 @@
     class gData
     {
         //WEAPON HASH   //This is currently for steam edition , need to get EPIC / SOCIAL CLUB version
-        public const string CWEAPON_HASH = "GTA5.exe+1CDDFEC";
+        public const string CWEAPON_HASH = "GTA5.exe+1CD8F0C"; //STEAM = GTA5.exe+1CDDFEC
 
         //Triggerbot
         public const string ENEMY_IN_CROSSHAIRS = "GTA5.exe+1FACDF0";
