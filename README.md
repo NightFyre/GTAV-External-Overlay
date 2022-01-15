@@ -41,13 +41,6 @@ I need testers , I personally only know 2 people with the social club edition an
 - Start GTA V and Go Online
 - Start the Hack
 
-# Donations
-Donations are accepted (will never be a requirement) and will be used to cover any expenses related to the development of this menu. Things like Internet Bill & Coffee
-
-Cashapp: $danknights23
-
-Keep in mind , donating will not grant you any special features! However you will have my gratitude and respect for supporting me :)
-
 # License
 
 “Commons Clause” License Condition v1.0
