@@ -24,7 +24,7 @@ namespace Simple_GTAV_External_Trainer.Helpers
         
         /// Patch 1.57 Offsets . Not current
         //WEAPON HASH
-        public const string CWEAPON_HASH = "GTA5.exe+1CDDFEC";
+        public const string CWEAPON_HASH = "GTA5.exe+1D04F0C";
 
         //Social Club
         public const string EPIC_ENEMY_IN_CROSSHAIRS = "GTA5.exe+1FACDF0";
