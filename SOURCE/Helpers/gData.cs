@@ -26,17 +26,18 @@ namespace Simple_GTAV_External_Trainer.Helpers
         //WEAPON HASH
         public const string CWEAPON_HASH = "GTA5.exe+1CDDFEC";
 
-        //Triggerbot Info
-        public const string ENEMY_IN_CROSSHAIRS = "GTA5.exe+1FB2380";
-        public const string IS_ZOOMED = "GTA5.exe+1FB23A4";
-        public const string ENTITY = "GTA5.exe+1FB2375";
-
         //Social Club
         public const string EPIC_ENEMY_IN_CROSSHAIRS = "GTA5.exe+1FACDF0";
         public const string EPIC_ENTITY = "GTA5.exe+1FACDE5";
         public const string EPIC_IS_ZOOMED = "GTA5.exe+1FACE14";
         
         /// Patch 1.58 Updated
+
+        //Triggerbot Info
+        public const string ENEMY_IN_CROSSHAIRS = "GTA5.exe+1FE9560";
+        public const string IS_ZOOMED = "GTA5.exe+1FE9584";
+        public const string ENTITY = "GTA5.exe+1FE9555";
+        
         //GodMode Info
         public const string GODMODE = "GTA5.exe+256A878,0x8,0x189";
 
