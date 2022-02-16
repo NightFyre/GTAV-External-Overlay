@@ -13,16 +13,17 @@ namespace Simple_GTAV_External_Trainer.Helpers
         //SettingsPTR = 44 39 05 ? ? ? ? 75 0D
 
         //Social Club Edition
-        //- WORLDPTR = GTA5.exe+252DCD8
+        //- WORLDPTR = GTA5.exe+25667E8
         //
 
         //Epic Games Edition
-        // WORLDPTR = GTA5.exe+252DCD8
+        // WORLDPTR = GTA5.exe+25667E8
 
         //STEAM Edition
         // WORLDPTR = GTA5.exe+25333D8
         
-        /// Patch 1.57 Offsets . Not current
+        /// Patch 1.58 Updated
+        
         //WEAPON HASH
         public const string CWEAPON_HASH = "GTA5.exe+1D04F0C";
 
@@ -30,8 +31,6 @@ namespace Simple_GTAV_External_Trainer.Helpers
         public const string EPIC_ENEMY_IN_CROSSHAIRS = "GTA5.exe+1FACDF0";
         public const string EPIC_ENTITY = "GTA5.exe+1FACDE5";
         public const string EPIC_IS_ZOOMED = "GTA5.exe+1FACE14";
-        
-        /// Patch 1.58 Updated
 
         //Triggerbot Info
         public const string ENEMY_IN_CROSSHAIRS = "GTA5.exe+1FE9560";
