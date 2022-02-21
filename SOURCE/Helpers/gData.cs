@@ -2,6 +2,8 @@ namespace Simple_GTAV_External_Trainer.Helpers
 {
     class gData
     {
+        /// GAME DATA INFO 
+        /*
         //POINTER AoB's
         //WorldPTR = 48 8B 05 ? ? ? ? 45 ? ? ? ? 48 8B 48 08 48 85 C9 74 07
         //BlipPTR = 4C 8D 05 ? ? ? ? 0F B7 C1
@@ -11,28 +13,27 @@ namespace Simple_GTAV_External_Trainer.Helpers
         //PlayerCountPTR = 48 8B 0D ? ? ? ? E8? ? ? ? 48 8B C8 E8? ? ? ? 48 8B CF
         //PickupDataPTR = 48 8B 05 ? ? ? ? 48 8B 1C F8 8B
         //SettingsPTR = 44 39 05 ? ? ? ? 75 0D
-
+        
+        /// PATCH v1.58 (revised 2/20/22)
         //Social Club Edition
         //- WORLDPTR = GTA5.exe+25667E8
-        //
 
         //Epic Games Edition
-        // WORLDPTR = GTA5.exe+25667E8
+        //- WORLDPTR = GTA5.exe+25667E8
 
         //STEAM Edition
-        // WORLDPTR = GTA5.exe+25333D8
-        
-        /// Patch 1.58 Updated
+        //- WORLDPTR = GTA5.exe+256A878
+        */
         
         //WEAPON HASH
         public const string CWEAPON_HASH = "GTA5.exe+1D04F0C";
 
-        //Social Club
-        public const string EPIC_ENEMY_IN_CROSSHAIRS = "GTA5.exe+1FACDF0";
-        public const string EPIC_ENTITY = "GTA5.exe+1FACDE5";
-        public const string EPIC_IS_ZOOMED = "GTA5.exe+1FACE14";
+        //TriggerBot Info (Epic + Social Club)
+        public const string EPIC_ENEMY_IN_CROSSHAIRS = "GTA5.exe+1FE5370";
+        public const string EPIC_ENTITY = "GTA5.exe+1FE5365";
+        public const string EPIC_IS_ZOOMED = "GTA5.exe+1FE5394";
 
-        //Triggerbot Info
+        //Triggerbot Info (STEAM)
         public const string ENEMY_IN_CROSSHAIRS = "GTA5.exe+1FE9560";
         public const string IS_ZOOMED = "GTA5.exe+1FE9584";
         public const string ENTITY = "GTA5.exe+1FE9555";
