@@ -2,8 +2,6 @@ namespace Simple_GTAV_External_Trainer.Helpers
 {
     class gData
     {
-        /// GAME DATA INFO 
-        /*
         //POINTER AoB's
         //WorldPTR = 48 8B 05 ? ? ? ? 45 ? ? ? ? 48 8B 48 08 48 85 C9 74 07
         //BlipPTR = 4C 8D 05 ? ? ? ? 0F B7 C1
@@ -13,50 +11,52 @@ namespace Simple_GTAV_External_Trainer.Helpers
         //PlayerCountPTR = 48 8B 0D ? ? ? ? E8? ? ? ? 48 8B C8 E8? ? ? ? 48 8B CF
         //PickupDataPTR = 48 8B 05 ? ? ? ? 48 8B 1C F8 8B
         //SettingsPTR = 44 39 05 ? ? ? ? 75 0D
-        
-        /// PATCH v1.58 (revised 2/20/22)
+
         //Social Club Edition
         //- WORLDPTR = GTA5.exe+25667E8
+        //
 
         //Epic Games Edition
-        //- WORLDPTR = GTA5.exe+25667E8
+        // WORLDPTR = GTA5.exe+25667E8
 
         //STEAM Edition
-        //- WORLDPTR = GTA5.exe+256A878
-        */
-        
+        // WORLDPTR = GTA5.exe+25333D8
+
+        /// Patch 1.60 Updated
+        //  WORLDPTR = GTA5.exe+256BDE8
+
         //WEAPON HASH
         public const string CWEAPON_HASH = "GTA5.exe+1D04F0C";
 
-        //TriggerBot Info (Epic + Social Club)
-        public const string EPIC_ENEMY_IN_CROSSHAIRS = "GTA5.exe+1FE5370";
-        public const string EPIC_ENTITY = "GTA5.exe+1FE5365";
-        public const string EPIC_IS_ZOOMED = "GTA5.exe+1FE5394";
+        //Social Club + Epic Games
+        public const string EPIC_ENEMY_IN_CROSSHAIRS = "GTA5.exe+1FACDF0";
+        public const string EPIC_ENTITY = "GTA5.exe+1FACDE5";
+        public const string EPIC_IS_ZOOMED = "GTA5.exe+1FACE14";
 
-        //Triggerbot Info (STEAM)
+        //Triggerbot Info
         public const string ENEMY_IN_CROSSHAIRS = "GTA5.exe+1FE9560";
         public const string IS_ZOOMED = "GTA5.exe+1FE9584";
         public const string ENTITY = "GTA5.exe+1FE9555";
         
         //GodMode Info
-        public const string GODMODE = "GTA5.exe+256A878,0x8,0x189";
+        public const string GODMODE = "GTA5.exe+256BDE8,0x8,0x189";
 
         //Never Wanted Info
-        public const string WANTED_LEVEL = "GTA5.exe+256A878,0x8,0x10C8,0x888";
+        public const string WANTED_LEVEL = "GTA5.exe+256BDE8,0x8,0x10C8,0x888";
 
         //Infinite Ammo
-        public const string INFINITE_AMMO = "GTA5.exe+256A878,0x8,0x10D0,0x78";
+        public const string INFINITE_AMMO = "GTA5.exe+256BDE8,0x8,0x10D0,0x78";
 
         //Perfect Weapon 
-        public const string WEAPON_DAMAGE = "GTA5.exe+256A878,0x8,0x10D8,0x20,0xB0";
-        public const string WEAPON_SPREAD = "GTA5.exe+256A878,0x8,0x10D8,0x20,0x74";
-        public const string WEAPON_BPENETRATION = "GTA5.exe+256A878,0x8,0x10D8,0x20,0x110";
-        public const string WEAPON_MVELOCITY = "GTA5.exe+256A878,0x8,0x10D8,0x20,0x11C";
-        public const string WEAPON_RANGE = "GTA5.exe+256A878,0x8,0x10D8,0x20,0x28C";
-        public const string WEAPON_RECOIL = "GTA5.exe+256A878,0x8,0x10D8,0x20,0x2F4";
+        public const string WEAPON_DAMAGE = "GTA5.exe+256BDE8,0x8,0x10D8,0x20,0xB0";
+        public const string WEAPON_SPREAD = "GTA5.exe+256BDE8,0x8,0x10D8,0x20,0x74";
+        public const string WEAPON_BPENETRATION = "GTA5.exe+256BDE8,0x8,0x10D8,0x20,0x110";
+        public const string WEAPON_MVELOCITY = "GTA5.exe+256BDE8,0x8,0x10D8,0x20,0x11C";
+        public const string WEAPON_RANGE = "GTA5.exe+256BDE8,0x8,0x10D8,0x20,0x28C";
+        public const string WEAPON_RECOIL = "GTA5.exe+256BDE8,0x8,0x10D8,0x20,0x2F4";
 
         //Weapon Data Base Address
-        public const string WeaponID = "GTA5.exe+256A878,0x8,0x10D8,0x20";
+        public const string WeaponID = "GTA5.exe+256BDE8,0x8,0x10D8,0x20";
         public const int ImpactType = 0x20;
         public const int ImpactExplode = 0x24;
         public const int Spread = 0x74;
@@ -76,19 +76,19 @@ namespace Simple_GTAV_External_Trainer.Helpers
         public const string pRecoil = "0";
 
         //Vehicle Data
-        public const string VehicleID = "GTA5.exe+256A878,0x8,0xD30";
-        public const string VehicleState = "GTA5.exe+256A878,0x8,0x1477";
-        public const string VehicleDirt = "GTA5.exe+256A878,0x8,0xD30,0x9F8";
-        public const string VehicleHealth = "GTA5.exe+256A878,0x8,0xD30,280";
-        public const string EngineHealth = "GTA5.exe+256A878,0x8,0xD30,908";
-        public const string VehicleGravity = "GTA5.exe+256A878,0x8,0xD30,C5C";
+        public const string VehicleID = "GTA5.exe+256BDE8,0x8,0xD30";
+        public const string VehicleState = "GTA5.exe+256BDE8,0x8,0x1477";
+        public const string VehicleDirt = "GTA5.exe+256BDE8,0x8,0xD30,0x9F8";
+        public const string VehicleHealth = "GTA5.exe+256BDE8,0x8,0xD30,280";
+        public const string EngineHealth = "GTA5.exe+256BDE8,0x8,0xD30,908";
+        public const string VehicleGravity = "GTA5.exe+256BDE8,0x8,0xD30,C5C";
 
         //Vehicle Handling Data
-        public const string VehicleAcceleration = "GTA5.exe+256A878,0x8,0xD30,0x938,0x4C";
-        public const string VehBrakeForce = "GTA5.exe+256A878,0x8,0xD30,0x938,0x6C";
-        public const string VehHandbrakeforce = "GTA5.exe+256A878,0x8,0xD30,0x938,0x7C";
-        public const string VehDamageMultiplier = "GTA5.exe+256A878,0x8,0xD30,0x938,0xF0";
-        public const string VehCollisionMultiplier = "GTA5.exe+256A878,0x8,0xD30,0x938,0xF8";
+        public const string VehicleAcceleration = "GTA5.exe+256BDE8,0x8,0xD30,0x938,0x4C";
+        public const string VehBrakeForce = "GTA5.exe+256BDE8,0x8,0xD30,0x938,0x6C";
+        public const string VehHandbrakeforce = "GTA5.exe+256BDE8,0x8,0xD30,0x938,0x7C";
+        public const string VehDamageMultiplier = "GTA5.exe+256BDE8,0x8,0xD30,0x938,0xF0";
+        public const string VehCollisionMultiplier = "GTA5.exe+256BDE8,0x8,0xD30,0x938,0xF8";
     }
 
     /// <summary>
