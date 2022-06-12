@@ -29,14 +29,15 @@ namespace Simple_GTAV_External_Trainer.Helpers
         public const string CWEAPON_HASH = "GTA5.exe+1D04F0C";
 
         //Social Club + Epic Games
+        //  ATTENTION! NOT UPDATED
         public const string EPIC_ENEMY_IN_CROSSHAIRS = "GTA5.exe+1FACDF0";
         public const string EPIC_ENTITY = "GTA5.exe+1FACDE5";
         public const string EPIC_IS_ZOOMED = "GTA5.exe+1FACE14";
 
         //Triggerbot Info
-        public const string ENEMY_IN_CROSSHAIRS = "GTA5.exe+1FE9560";
-        public const string IS_ZOOMED = "GTA5.exe+1FE9584";
-        public const string ENTITY = "GTA5.exe+1FE9555";
+        public const string ENEMY_IN_CROSSHAIRS = "GTA5.exe+0x1FEAAF0";
+        public const string IS_ZOOMED = "GTA5.exe+0x1FEAB14";
+        public const string ENTITY = "GTA5.exe+0x1FEAAE5";
         
         //GodMode Info
         public const string GODMODE = "GTA5.exe+256BDE8,0x8,0x189";
